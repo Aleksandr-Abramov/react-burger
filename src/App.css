@@ -43,6 +43,13 @@
     src: url("./fonts/JetBrainsMono-Bold.ttf") format("ttf");
 } */
 
+@font-face {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./fonts/Iceland-Regular.ttf") format("ttf");
+}
+
 
 .wrapper {
     max-width: 1240px;
