@@ -1,38 +1,53 @@
-.App {
-  text-align: center;
+
+:root {
+    --background: #1c1c21;
+    --background-alt: #131316;
+    --background-element: #2f2f37;
+    --offset-base-variable: 2px;
+    --offset-base-size: 4px;
+    --top-constructor-item-border-radius: 88px 88px 40px 40px;
+    --bottom-constructor-item-border-radius: 40px 40px 88px 88px;
+
+    --common-border-radius: 64px;
+    --common-border-radius-s: 40px;
+    --text-primary-color: white;
+    --text-inactive-color: #8585AD;
+    --colors-interface-accent: #4c4cff;
+    --colors-interface-error: #E52B1A;
+    --colors-interface-success: #00cccc;
+    --colors-button-inactive: #3A3A55;
+    scrollbar-color: #2F2F37 #8585AD;
+    scrollbar-width: thin;
+
+    --common-transition: all .3s ease-in;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* @font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url("../../react-burger/src/fonts/JetBrainsMono-Regular.ttf") format("ttf");
+} */
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./fonts/JetBrainsMono-Regular.ttf") format("ttf");
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* @font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./fonts/JetBrainsMono-Bold.ttf") format("ttf");
+} */
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
+.wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header {
+    background: var(--background);
 }
