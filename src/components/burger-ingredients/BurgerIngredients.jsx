@@ -4,13 +4,6 @@ import TabContainer from "../tab-container/TabContainer";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import { data } from "../../utils/data";
 
-import {
-  Counter,
-  CurrencyIcon,
-  Tab,
-  ListIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-
 const BurgerIngredients = () => {
   const bun = data.filter((item) => item.type === "bun").map((item) => item);
   const main = data.filter((item) => item.type === "main").map((item) => item);
@@ -24,7 +17,7 @@ const BurgerIngredients = () => {
         Соберите бургер
       </h1>
       <TabContainer />
-      <div className={`${styles.container}`}>
+      <div className={`${styles.container} custom-scroll`}>
         <BurgerIngredient ingredients={bun} title="Булки" />
         <BurgerIngredient ingredients={sauce} title="Соусы" />
         <BurgerIngredient ingredients={main} title="Ингридиенты" />

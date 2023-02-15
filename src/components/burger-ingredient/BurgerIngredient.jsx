@@ -1,11 +1,9 @@
 import React from "react";
-import styles from "./burger-ingredients.module.css";
+import styles from "./burger-ingredient.module.css";
 
 import {
   Counter,
   CurrencyIcon,
-  Tab,
-  ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerIngredient = ({ ingredients, title = `Булки` }) => {
@@ -26,6 +24,7 @@ const BurgerIngredient = ({ ingredients, title = `Булки` }) => {
             <p className={`${styles.text} text text_type_main-default`}>
               {item.name}
             </p>
+            <Counter/>
           </div>
         );
       })}

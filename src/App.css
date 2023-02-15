@@ -1,60 +1,27 @@
 
-:root {
-    --background: #1c1c21;
-    --background-alt: #131316;
-    --background-element: #2f2f37;
-    --offset-base-variable: 2px;
-    --offset-base-size: 4px;
-    --top-constructor-item-border-radius: 88px 88px 40px 40px;
-    --bottom-constructor-item-border-radius: 40px 40px 88px 88px;
-
-    --common-border-radius: 64px;
-    --common-border-radius-s: 40px;
-    --text-primary-color: white;
-    --text-inactive-color: #8585AD;
-    --colors-interface-accent: #4c4cff;
-    --colors-interface-error: #E52B1A;
-    --colors-interface-success: #00cccc;
-    --colors-button-inactive: #3A3A55;
-    scrollbar-color: #2F2F37 #8585AD;
-    scrollbar-width: thin;
-
-    --common-transition: all .3s ease-in;
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/JetBrainsMono-Regular.ttf") format("ttf");
 }
-
-/* @font-face {
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
-    src: url("../../react-burger/src/fonts/JetBrainsMono-Regular.ttf") format("ttf");
-} */
 
 @font-face {
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
-    src: url("./fonts/JetBrainsMono-Regular.ttf") format("ttf");
+  font-family: "Iceland";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/Iceland-Regular.ttf") format("ttf");
 }
-
-/* @font-face {
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
-    src: url("./fonts/JetBrainsMono-Bold.ttf") format("ttf");
-} */
-
-@font-face {
-    font-family: 'Iceland';
-    font-style: normal;
-    font-weight: 400;
-    src: url("./fonts/Iceland-Regular.ttf") format("ttf");
-}
-
 
 .wrapper {
-    max-width: 1240px;
-    margin: 0 auto;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 .header {
-    background: var(--background);
+  background: var(--background);
+}
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  
 }
