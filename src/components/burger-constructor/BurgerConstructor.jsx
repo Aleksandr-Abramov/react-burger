@@ -1,17 +1,24 @@
 import React from "react";
 import styles from "./burger-constructor.module.css";
-import image from '../../images/price.svg';
+import image from "../../images/price.svg";
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   Button,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { data } from "../../utils/data";
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ ingredients }) => {
   return (
     <section className={`${styles.section}`}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "end", gap: "16px",  }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "end",
+          gap: "16px",
+        }}
+      >
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -21,7 +28,7 @@ const BurgerConstructor = () => {
         />
 
         <ul className={`${styles.list} custom-scroll`}>
-          {data.map((item, index) => {
+          {ingredients.map((item, index) => {
             return (
               <li className={`${styles.listItem}`} key={index}>
                 <DragIcon type="primary" />
@@ -58,4 +65,7 @@ const BurgerConstructor = () => {
   );
 };
 
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array,
+};
 export default BurgerConstructor;

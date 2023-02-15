@@ -1,16 +1,22 @@
 import React from "react";
 import styles from "./burger-ingredient.module.css";
+import PropTypes from 'prop-types';
 
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerIngredient = ({ ingredients, title = `Булки` }) => {
-  console.log(ingredients);
+const BurgerIngredient = ({
+  ingredients,
+  title = `Булки`,
+  titleId,
+}) => {
   return (
     <>
-      <h2 className={`${styles.title} text text_type_main-medium`}>{title}</h2>
+      <h2 className={`${styles.title} text text_type_main-medium`} id={titleId}>
+        {title}
+      </h2>
       {ingredients.map((item) => {
         return (
           <div className={styles.container} key={item._id}>
@@ -24,12 +30,18 @@ const BurgerIngredient = ({ ingredients, title = `Булки` }) => {
             <p className={`${styles.text} text text_type_main-default`}>
               {item.name}
             </p>
-            <Counter/>
+            <Counter />
           </div>
         );
       })}
     </>
   );
 };
+
+BurgerIngredient.propTypes = {
+  ingredients: PropTypes.array,
+  title: PropTypes.string,
+  titleId: PropTypes.string,
+}
 
 export default BurgerIngredient;

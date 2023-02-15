@@ -2,7 +2,7 @@
   max-width: 600px;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: 1fr ;
+  grid-template-rows: repeat(2, minmax(max-content, min-content));
 }
 
 .container {
@@ -10,6 +10,7 @@
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   margin-bottom: 40px;
+  overflow: hidden;
   overflow-y: scroll;
-  height: 912px;
+  height: 530px;
 }

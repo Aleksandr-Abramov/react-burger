@@ -3,6 +3,7 @@ import "./App.css";
 import AppHeader from "./components/app-header/AppHeader";
 import BurgerIngredients from "./components/burger-ingredients/BurgerIngredients";
 import BurgerConstructor from "./components/burger-constructor/BurgerConstructor";
+import { data } from "./utils/data";
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
       </header>
       <div className="wrapper">
         <main className="main">
-          <BurgerIngredients/>
-          <BurgerConstructor/>
+          <BurgerIngredients ingredients={data}/>
+          <BurgerConstructor ingredients={data}/>
         </main>
       </div>
     </div>
