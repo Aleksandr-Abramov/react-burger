@@ -1,0 +1,21 @@
+.modal {
+    padding: 0;
+    margin: 0;
+    width: 720px;
+    min-height: 538px;
+    background: #1C1C21;
+    position: relative;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    border-radius: 40px;
+}
+
+.icon {
+    position: absolute;
+    right: 40px;
+    top: 50px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

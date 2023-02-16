@@ -10,7 +10,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = ({ ingredients, handlerModelOpen }) => {
   return (
     <section className={`${styles.section}`}>
       <div
@@ -59,7 +59,12 @@ const BurgerConstructor = ({ ingredients }) => {
           </span>
           <img src={image} alt="" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={handlerModelOpen}
+        >
           Оформить заказ
         </Button>
       </div>

@@ -5,7 +5,7 @@ import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import PropTypes from "prop-types";
 import { ingridientPropType } from "../../utils/propType";
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = ({ ingredients, handlerModelOpen }) => {
   const [current, setCurrent] = React.useState("bun");
 
   const refs = {
@@ -70,18 +70,21 @@ const BurgerIngredients = ({ ingredients }) => {
           title="Булки"
           titleId="bun"
           refs={refs.bunRef}
+          handlerModelOpen={handlerModelOpen}
         />
         <BurgerIngredient
           ingredients={sauce}
           title="Соусы"
           titleId="sauce"
           refs={refs.sauceRef}
+          handlerModelOpen={handlerModelOpen}
         />
         <BurgerIngredient
           ingredients={main}
           title="Начинка"
           titleId="main"
           refs={refs.mainRef}
+          handlerModelOpen={handlerModelOpen}
         />
       </div>
     </section>
