@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./burger-constructor.module.css";
 import image from "../../images/price.svg";
 import PropTypes from "prop-types";
+import { ingridientPropType } from "../../utils/propType";
+
 import {
   ConstructorElement,
   Button,
@@ -66,6 +68,6 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array,
+  ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
 };
 export default BurgerConstructor;

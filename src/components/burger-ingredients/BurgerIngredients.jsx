@@ -3,13 +3,38 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import PropTypes from "prop-types";
+import { ingridientPropType } from "../../utils/propType";
 
 const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = React.useState("bun");
 
+  const refs = {
+    bunRef: React.useRef(),
+    mainRef: React.useRef(),
+    sauceRef: React.useRef(),
+  };
+
   const onTabClick = (tab) => {
-    const element = document.getElementById(tab);
-    element.scrollIntoView({ block: "start", behavior: "smooth" });
+    switch (tab) {
+      case "sauce":
+        refs.sauceRef.current.scrollIntoView({
+          block: "start",
+          behavior: "smooth",
+        });
+        break;
+      case "main":
+        refs.mainRef.current.scrollIntoView({
+          block: "start",
+          behavior: "smooth",
+        });
+        break;
+      default:
+        refs.bunRef.current.scrollIntoView({
+          block: "start",
+          behavior: "smooth",
+        });
+        break;
+    }
     setCurrent(tab);
   };
 
@@ -29,27 +54,42 @@ const BurgerIngredients = ({ ingredients }) => {
         Соберите бургер
       </h1>
       <div style={{ display: "flex" }} className="mb-10">
-        <Tab value="bun" active={current === "one"} onClick={onTabClick}>
+        <Tab value="bun" active={current === "bun"} onClick={onTabClick}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === "two"} onClick={onTabClick}>
+        <Tab value="sauce" active={current === "sauce"} onClick={onTabClick}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === "three"} onClick={onTabClick}>
+        <Tab value="main" active={current === "main"} onClick={onTabClick}>
           Начинка
         </Tab>
       </div>
       <div className={`${styles.container} custom-scroll`}>
-        <BurgerIngredient ingredients={bun} title="Булки" titleId="bun" />
-        <BurgerIngredient ingredients={sauce} title="Соусы" titleId="sauce" />
-        <BurgerIngredient ingredients={main} title="Начинка" titleId="main" />
+        <BurgerIngredient
+          ingredients={bun}
+          title="Булки"
+          titleId="bun"
+          refs={refs.bunRef}
+        />
+        <BurgerIngredient
+          ingredients={sauce}
+          title="Соусы"
+          titleId="sauce"
+          refs={refs.sauceRef}
+        />
+        <BurgerIngredient
+          ingredients={main}
+          title="Начинка"
+          titleId="main"
+          refs={refs.mainRef}
+        />
       </div>
     </section>
   );
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.array,
-}
+  ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
+};
 
 export default BurgerIngredients;

@@ -1,20 +1,17 @@
 import React from "react";
 import styles from "./burger-ingredient.module.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import { ingridientPropType } from "../../utils/propType";
 
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerIngredient = ({
-  ingredients,
-  title = `Булки`,
-  titleId,
-}) => {
+const BurgerIngredient = ({ ingredients, title = `Булки`, titleId, refs}) => {
   return (
     <>
-      <h2 className={`${styles.title} text text_type_main-medium`} id={titleId}>
+      <h2 className={`${styles.title} text text_type_main-medium`} id={titleId} ref={refs}>
         {title}
       </h2>
       {ingredients.map((item) => {
@@ -38,10 +35,16 @@ const BurgerIngredient = ({
   );
 };
 
+// BurgerIngredient.propTypes = {
+//   ingredients: PropTypes.array,
+//   title: PropTypes.string,
+//   titleId: PropTypes.string,
+// }
+
 BurgerIngredient.propTypes = {
-  ingredients: PropTypes.array,
-  title: PropTypes.string,
-  titleId: PropTypes.string,
-}
+  ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
+  title: PropTypes.string.isRequired,
+  titleId: PropTypes.string.isRequired,
+};
 
 export default BurgerIngredient;
