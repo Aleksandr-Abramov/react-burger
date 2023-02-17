@@ -53,6 +53,7 @@ BurgerIngredient.propTypes = {
   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
   title: PropTypes.string.isRequired,
   titleId: PropTypes.string.isRequired,
+  handlerModelOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient;

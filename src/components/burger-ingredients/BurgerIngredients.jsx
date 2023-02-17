@@ -38,15 +38,20 @@ const BurgerIngredients = ({ ingredients, handlerModelOpen }) => {
     setCurrent(tab);
   };
 
-  const bun = ingredients
-    .filter((item) => item.type === "bun")
-    .map((item) => item);
-  const main = ingredients
-    .filter((item) => item.type === "main")
-    .map((item) => item);
-  const sauce = ingredients
-    .filter((item) => item.type === "sauce")
-    .map((item) => item);
+  const bun = React.useMemo(
+    () => ingredients.filter((item) => item.type === "bun").map((item) => item),
+    [ingredients]
+  );
+  const main = React.useMemo(
+    () =>
+      ingredients.filter((item) => item.type === "main").map((item) => item),
+    [ingredients]
+  );
+  const sauce = React.useMemo(
+    () =>
+      ingredients.filter((item) => item.type === "sauce").map((item) => item),
+    [ingredients]
+  );
 
   return (
     <section className={styles.section}>
@@ -93,6 +98,7 @@ const BurgerIngredients = ({ ingredients, handlerModelOpen }) => {
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
+  handlerModelOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

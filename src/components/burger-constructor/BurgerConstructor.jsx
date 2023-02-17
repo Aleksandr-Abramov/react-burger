@@ -30,9 +30,9 @@ const BurgerConstructor = ({ ingredients, handlerModelOpen }) => {
         />
 
         <ul className={`${styles.list} custom-scroll`}>
-          {ingredients.map((item, index) => {
+          {ingredients.map((item) => {
             return (
-              <li className={`${styles.listItem}`} key={index}>
+              <li className={`${styles.listItem}`} key={item._id}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   text={item.name}
@@ -74,5 +74,6 @@ const BurgerConstructor = ({ ingredients, handlerModelOpen }) => {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
+  handlerModelOpen: PropTypes.func.isRequired,
 };
 export default BurgerConstructor;

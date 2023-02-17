@@ -7,17 +7,34 @@ import ModalOverlay from "./components/modal-overlay/ModalOverlay";
 import Modal from "./components/modal/Modal";
 import OrderDetails from "./components/order-details/OrderDetails";
 import IngredientDetails from "./components/ingredient-details/IngredientDetails";
-import { data } from "./utils/data";
+// import { data } from "./utils/data";
+import api from "./utils/api";
 
 function App() {
   const [isOpenPopupIngredients, setIsOpenPopupIngredients] =
     React.useState(false);
   const [isOpenPopupOrder, setisOpenPopupOrder] = React.useState(false);
   const [ingredientData, setIngredientData] = React.useState({});
+  const [apiData, setApiData] = React.useState([]);
 
-  function handlerModelClose() {
-    setIsOpenPopupIngredients(false);
-    setisOpenPopupOrder(false);
+  React.useEffect(() => {
+    api
+      .getData()
+      .then((res) => {
+        setApiData(res.data);
+      })
+      .catch((err) =>
+        console.log(`во время получения ингридиентов произошла ошибка ${err}`)
+      );
+  }, []);
+
+  function handlerModelClose(e) {
+    e.stopPropagation();
+    if(e.target.dataset.overlay === "overlay"|| e.currentTarget.type === 'button') {
+      setIsOpenPopupIngredients(false);
+      setisOpenPopupOrder(false);
+    }
+    
   }
 
   const handlerModelOpen = (model: string, data: object) => {
@@ -36,24 +53,24 @@ function App() {
       <div className="wrapper">
         <main className="main">
           <BurgerIngredients
-            ingredients={data}
+            ingredients={apiData}
             handlerModelOpen={handlerModelOpen}
           />
           <BurgerConstructor
-            ingredients={data}
+            ingredients={apiData}
             handlerModelOpen={handlerModelOpen}
           />
         </main>
       </div>
       {isOpenPopupIngredients && (
-        <ModalOverlay>
+        <ModalOverlay handlerModelClose={handlerModelClose}>
           <Modal handlerModelClose={handlerModelClose}>
             <IngredientDetails data={ingredientData} />
           </Modal>
         </ModalOverlay>
       )}
       {isOpenPopupOrder && (
-        <ModalOverlay>
+        <ModalOverlay handlerModelClose={handlerModelClose}>
           <Modal handlerModelClose={handlerModelClose}>
             <OrderDetails />
           </Modal>
