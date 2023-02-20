@@ -6,7 +6,13 @@ const modalRoot = document.getElementById("modal-portal");
 
 const ModalOverlay = ({ children, handlerModelClose }) => {
   return createPortal(
-    <div data-overlay="overlay" className={`${styles.overlay}`} onClick={(e) => handlerModelClose(e)}>{children}</div>,
+    <div
+      data-overlay="overlay"
+      className={`${styles.overlay}`}
+      onClick={(e) => handlerModelClose(e)}
+    >
+      {children}
+    </div>,
     modalRoot
   );
 };

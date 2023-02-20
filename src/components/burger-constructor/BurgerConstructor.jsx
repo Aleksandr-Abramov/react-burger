@@ -3,6 +3,8 @@ import styles from "./burger-constructor.module.css";
 import image from "../../images/price.svg";
 import PropTypes from "prop-types";
 import { ingridientPropType } from "../../utils/propType";
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
 
 import {
   ConstructorElement,
@@ -10,7 +12,12 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructor = ({ ingredients, handlerModelOpen }) => {
+const BurgerConstructor = ({
+  ingredients,
+  handlerModelOpen,
+  isOpenPopupOrder,
+  handlerModelClose,
+}) => {
   return (
     <section className={`${styles.section}`}>
       <div
@@ -68,6 +75,11 @@ const BurgerConstructor = ({ ingredients, handlerModelOpen }) => {
           Оформить заказ
         </Button>
       </div>
+      {isOpenPopupOrder && (
+        <Modal handlerModelClose={handlerModelClose}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   );
 };

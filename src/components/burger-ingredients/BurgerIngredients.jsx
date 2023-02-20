@@ -4,8 +4,16 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import PropTypes from "prop-types";
 import { ingridientPropType } from "../../utils/propType";
+import Modal from "../modal/Modal";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
-const BurgerIngredients = ({ ingredients, handlerModelOpen }) => {
+const BurgerIngredients = ({
+  ingredients,
+  handlerModelOpen,
+  isOpenPopupIngredients,
+  handlerModelClose,
+  ingredientData,
+}) => {
   const [current, setCurrent] = React.useState("bun");
 
   const refs = {
@@ -92,6 +100,11 @@ const BurgerIngredients = ({ ingredients, handlerModelOpen }) => {
           handlerModelOpen={handlerModelOpen}
         />
       </div>
+      {isOpenPopupIngredients && (
+        <Modal handlerModelClose={handlerModelClose}>
+          <IngredientDetails data={ingredientData} />
+        </Modal>
+      )}
     </section>
   );
 };
