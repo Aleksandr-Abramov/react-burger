@@ -11,7 +11,7 @@ function App() {
   const [isOpenPopupIngredients, setIsOpenPopupIngredients] =
     React.useState(false);
   const [isOpenPopupOrder, setisOpenPopupOrder] = React.useState(false);
-  const [isOpenPopupError, setIsOpenPopupError] = React.useState(true);
+  const [isOpenPopupError, setIsOpenPopupError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("Во время получения ингридиентов. На сервере произошла ошибка.");
   const [ingredientData, setIngredientData] = React.useState({});
   const [apiData, setApiData] = React.useState([]);
@@ -42,7 +42,7 @@ function App() {
     }
   }
 
-  const handlerModelOpen = (model: string, data: object) => {
+  const handlerModelOpen = (model, data) => {
     if (model === "ingridients") {
       setIngredientData(data);
       setIsOpenPopupIngredients(true);
