@@ -1,0 +1,46 @@
+.section {
+  margin-top: 100px;
+  max-width: 600px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content;
+  justify-items: center;
+  justify-self: end;
+}
+.list {
+  padding: 0;
+  margin: 0 -20px 0 0;
+  padding-right: 9px;
+  list-style-type: none;
+  height: 470px;
+  overflow-y: scroll;
+}
+
+.listItem {
+  margin: 0 0 16px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.buttonContainer {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content;
+  justify-items: end;
+  align-items: center;
+  width: 85%;
+}
+.span {
+  margin-right: 8px;
+}
+.priceContainer {
+  display: flex;
+  align-items: center;
+}
+.swg {
+  width: 40px;
+  height: 40px;
+}

@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.didgitContainer {
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detailContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
