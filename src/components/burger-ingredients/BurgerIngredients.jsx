@@ -6,15 +6,16 @@ import PropTypes from "prop-types";
 import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import { useSelector } from "react-redux";
 
 const BurgerIngredients = ({
-  ingredients,
   handlerModelOpen,
-  isOpenPopupIngredients,
   handlerModelClose,
   ingredientData,
 }) => {
   const [current, setCurrent] = React.useState("bun");
+  const isOpenClosePopupIngredients = useSelector((state) => state.popupIngredientsReducer.isOpenClose)
+  const ingredients = useSelector((state) => state.BurgerIngredientsReducer.ingredients)
 
   const refs = {
     bunRef: React.useRef(),
@@ -68,7 +69,7 @@ const BurgerIngredients = ({
       </h1>
       <div style={{ display: "flex" }} className="mb-10">
         <Tab value="bun" active={current === "bun"} onClick={onTabClick}>
-          Булки
+          Булки 
         </Tab>
         <Tab value="sauce" active={current === "sauce"} onClick={onTabClick}>
           Соусы
@@ -100,7 +101,7 @@ const BurgerIngredients = ({
           handlerModelOpen={handlerModelOpen}
         />
       </div>
-      {isOpenPopupIngredients && (
+      {isOpenClosePopupIngredients && (
         <Modal handlerModelClose={handlerModelClose}>
           <IngredientDetails data={ingredientData} />
         </Modal>
@@ -109,9 +110,9 @@ const BurgerIngredients = ({
   );
 };
 
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
-  handlerModelOpen: PropTypes.func.isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
+//   handlerModelOpen: PropTypes.func.isRequired,
+// };
 
 export default BurgerIngredients;

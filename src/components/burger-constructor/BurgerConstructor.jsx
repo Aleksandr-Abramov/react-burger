@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
+import { useSelector } from "react-redux";
 
 import {
   ConstructorElement,
@@ -12,12 +13,13 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+
 const BurgerConstructor = ({
-  ingredients,
   handlerModelOpen,
-  isOpenPopupOrder,
   handlerModelClose,
 }) => {
+  const ingredients = useSelector((state) => state.BurgerIngredientsReducer.ingredients)
+  const isOpenCloseOrderPopup = useSelector((state) => state.popupOrderReducer.isOpenClose)
   return (
     <section className={`${styles.section}`}>
       <div
@@ -75,7 +77,7 @@ const BurgerConstructor = ({
           Оформить заказ
         </Button>
       </div>
-      {isOpenPopupOrder && (
+      {isOpenCloseOrderPopup && (
         <Modal handlerModelClose={handlerModelClose}>
           <OrderDetails />
         </Modal>
@@ -84,8 +86,8 @@ const BurgerConstructor = ({
   );
 };
 
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
-  handlerModelOpen: PropTypes.func.isRequired,
-};
+// BurgerConstructor.propTypes = {
+//   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
+//   handlerModelOpen: PropTypes.func.isRequired,
+// };
 export default BurgerConstructor;

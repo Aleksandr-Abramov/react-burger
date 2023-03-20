@@ -3,10 +3,13 @@ import styles from "./burger-ingredient.module.css";
 import PropTypes from "prop-types";
 import { ingridientPropType } from "../../utils/propType";
 
+
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector, useDispatch } from "react-redux";
+import { setIngredient } from "../../services/actions/BurgerIngredientReducer";
 
 const BurgerIngredient = ({
   ingredients,
@@ -15,6 +18,12 @@ const BurgerIngredient = ({
   refs,
   handlerModelOpen,
 }) => {
+  const dispatch = useDispatch();
+
+  // const handlerModelOpen = ({item}) => {
+  //   console.log(item);
+  //   dispatch(setIngredient(item))
+  // }
   return (
     <>
       <h2
@@ -25,6 +34,7 @@ const BurgerIngredient = ({
         {title}
       </h2>
       {ingredients.map((item) => {
+        
         return (
           <div
             className={styles.container}
