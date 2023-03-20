@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./burger-constructor.module.css";
 import image from "../../images/price.svg";
-import PropTypes from "prop-types";
-import { ingridientPropType } from "../../utils/propType";
+//import PropTypes from "prop-types";
+//import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { openOrderPopup } from "../../services/actions/popupOrderRecucer";
 
 import {
   ConstructorElement,
@@ -15,11 +16,15 @@ import {
 
 
 const BurgerConstructor = ({
-  handlerModelOpen,
   handlerModelClose,
 }) => {
+  const isOpenCloseOrderPopup = useSelector((state) => state.popupOrderReducer.isOpenCloseOrder)
   const ingredients = useSelector((state) => state.BurgerIngredientsReducer.ingredients)
-  const isOpenCloseOrderPopup = useSelector((state) => state.popupOrderReducer.isOpenClose)
+  const dispatch = useDispatch()
+
+  const handlerModelOpen = () => {
+    dispatch(openOrderPopup());
+  }
   return (
     <section className={`${styles.section}`}>
       <div
@@ -78,7 +83,7 @@ const BurgerConstructor = ({
         </Button>
       </div>
       {isOpenCloseOrderPopup && (
-        <Modal handlerModelClose={handlerModelClose}>
+        <Modal>
           <OrderDetails />
         </Modal>
       )}

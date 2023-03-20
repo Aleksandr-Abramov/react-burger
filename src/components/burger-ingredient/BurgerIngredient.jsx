@@ -8,22 +8,22 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setIngredient } from "../../services/actions/BurgerIngredientReducer";
+import { openIngredientPopup } from "../../services/actions/popupIngredientsReducer";
 
 const BurgerIngredient = ({
   ingredients,
   title,
   titleId,
   refs,
-  handlerModelOpen,
 }) => {
   const dispatch = useDispatch();
 
-  // const handlerModelOpen = ({item}) => {
-  //   console.log(item);
-  //   dispatch(setIngredient(item))
-  // }
+  const handlerModelOpen = (item) => {
+    dispatch(setIngredient(item));
+    dispatch(openIngredientPopup());
+  }
   return (
     <>
       <h2
@@ -39,7 +39,7 @@ const BurgerIngredient = ({
           <div
             className={styles.container}
             key={item._id}
-            onClick={() => handlerModelOpen("ingridients", item)}
+            onClick={() => handlerModelOpen(item)}
           >
             <img src={item.image} alt={item.name} className={styles.img} />
             <div className={styles.priceContainer}>
@@ -63,7 +63,7 @@ BurgerIngredient.propTypes = {
   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
   title: PropTypes.string.isRequired,
   titleId: PropTypes.string.isRequired,
-  handlerModelOpen: PropTypes.func.isRequired,
+  // handlerModelOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient;

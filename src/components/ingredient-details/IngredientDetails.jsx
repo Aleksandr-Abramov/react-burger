@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
+import { useSelector } from "react-redux";
 
-const IngredientDetails = ({ data }) => {
+const IngredientDetails = () => {
+  const data = useSelector((state) => state.BurgerIngredientReducer.ingredient)
+
   return (
     <div className={styles.container}>
       <h3 className="text text_type_main-large mt-10 mb-4">

@@ -2,19 +2,17 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
-import PropTypes from "prop-types";
-import { ingridientPropType } from "../../utils/propType";
+//import PropTypes from "prop-types";
+//import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useSelector } from "react-redux";
 
 const BurgerIngredients = ({
-  handlerModelOpen,
   handlerModelClose,
-  ingredientData,
 }) => {
   const [current, setCurrent] = React.useState("bun");
-  const isOpenClosePopupIngredients = useSelector((state) => state.popupIngredientsReducer.isOpenClose)
+  const isOpenClosePopupIngredients = useSelector((state) => state.popupIngredientsReducer.isOpenCloseIngredient)
   const ingredients = useSelector((state) => state.BurgerIngredientsReducer.ingredients)
 
   const refs = {
@@ -84,26 +82,23 @@ const BurgerIngredients = ({
           title="Булки"
           titleId="bun"
           refs={refs.bunRef}
-          handlerModelOpen={handlerModelOpen}
         />
         <BurgerIngredient
           ingredients={sauce}
           title="Соусы"
           titleId="sauce"
           refs={refs.sauceRef}
-          handlerModelOpen={handlerModelOpen}
         />
         <BurgerIngredient
           ingredients={main}
           title="Начинка"
           titleId="main"
           refs={refs.mainRef}
-          handlerModelOpen={handlerModelOpen}
         />
       </div>
       {isOpenClosePopupIngredients && (
-        <Modal handlerModelClose={handlerModelClose}>
-          <IngredientDetails data={ingredientData} />
+        <Modal>
+          <IngredientDetails  />
         </Modal>
       )}
     </section>

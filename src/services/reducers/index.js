@@ -1,6 +1,6 @@
 import { popupIngredientsReducer } from "./popupIngredientsReducer";
 import { popupOrderReducer } from "./popupOrderReducer";
-import { BurgerIngredientsReducer } from "./BurgerIngredients";
+import { BurgerIngredientsReducer } from "./BurgerIngredientsReducer";
 import { combineReducers } from "redux";
 import { BurgerIngredientReducer } from "./BurgerIngredientReducer";
 
@@ -8,5 +8,5 @@ export const rootReducer = combineReducers({
     popupIngredientsReducer,
     popupOrderReducer,
     BurgerIngredientsReducer,
-    // BurgerIngredientReducer
+    BurgerIngredientReducer
 })

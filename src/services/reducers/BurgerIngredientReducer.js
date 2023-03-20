@@ -10,7 +10,7 @@ export const BurgerIngredientReducer = (state = initialState, action) => {
         case GET_INGREDIENT:
             return {...state, ingredient: {...state.ingredient}}
         case SET_INGREDIENT:
-            return {...state, ingredient: {...action.payload}}
+            return {...state, ingredient: action.peyload}
         default:
             return state;
     }
