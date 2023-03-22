@@ -10,11 +10,6 @@
   grid-template-rows: repeat(4, minmax(min-content, max-content));
 }
 
-.title {
-  grid-column: 1/-1;
-  justify-self: self-start;
-  margin-bottom: 24px;
-}
 .img {
   padding: 0 16px 0 16px;
 }

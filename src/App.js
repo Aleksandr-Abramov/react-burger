@@ -3,6 +3,8 @@ import "./App.css";
 import AppHeader from "./components/app-header/AppHeader";
 import BurgerIngredients from "./components/burger-ingredients/BurgerIngredients";
 import BurgerConstructor from "./components/burger-constructor/BurgerConstructor";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 //import Modal from "./components/modal/Modal";
 import { useDispatch } from "react-redux";
 import { fetchIngredients } from "./services/actions/asyncActions";
@@ -26,10 +28,13 @@ function App() {
       </header>
       <div className="wrapper">
         <main className="main">
+          <DndProvider backend={HTML5Backend}>
           <BurgerIngredients
           />
           <BurgerConstructor
           />
+          </DndProvider>
+          
         </main>
       </div>
       {/* {isOpenPopupError && (

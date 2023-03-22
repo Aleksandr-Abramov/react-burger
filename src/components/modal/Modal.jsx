@@ -48,9 +48,9 @@ const Modal = ({ children }) => {
   );
 };
 
-Modal.propTypes = {
-  handlerModelClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
-};
+// Modal.propTypes = {
+//   handlerModelClose: PropTypes.func.isRequired,
+//   children: PropTypes.element.isRequired,
+// };
 
 export default Modal;

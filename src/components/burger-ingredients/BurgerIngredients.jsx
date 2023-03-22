@@ -2,18 +2,21 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
+import BurgerIngredientTitle from "../burger-ingredient-title/BurgerIngredientTitle";
 //import PropTypes from "prop-types";
 //import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useSelector } from "react-redux";
 
-const BurgerIngredients = ({
-  handlerModelClose,
-}) => {
+const BurgerIngredients = ({ handlerModelClose }) => {
   const [current, setCurrent] = React.useState("bun");
-  const isOpenClosePopupIngredients = useSelector((state) => state.popupIngredientsReducer.isOpenCloseIngredient)
-  const ingredients = useSelector((state) => state.BurgerIngredientsReducer.ingredients)
+  const isOpenClosePopupIngredients = useSelector(
+    (state) => state.popupIngredientsReducer.isOpenCloseIngredient
+  );
+  const ingredients = useSelector(
+    (state) => state.BurgerIngredientsReducer.ingredients
+  );
 
   const refs = {
     bunRef: React.useRef(),
@@ -67,7 +70,7 @@ const BurgerIngredients = ({
       </h1>
       <div style={{ display: "flex" }} className="mb-10">
         <Tab value="bun" active={current === "bun"} onClick={onTabClick}>
-          Булки 
+          Булки
         </Tab>
         <Tab value="sauce" active={current === "sauce"} onClick={onTabClick}>
           Соусы
@@ -77,28 +80,20 @@ const BurgerIngredients = ({
         </Tab>
       </div>
       <div className={`${styles.container} custom-scroll`}>
-        <BurgerIngredient
-          ingredients={bun}
-          title="Булки"
-          titleId="bun"
-          refs={refs.bunRef}
-        />
-        <BurgerIngredient
-          ingredients={sauce}
-          title="Соусы"
-          titleId="sauce"
-          refs={refs.sauceRef}
-        />
-        <BurgerIngredient
-          ingredients={main}
-          title="Начинка"
-          titleId="main"
-          refs={refs.mainRef}
-        />
+        <BurgerIngredientTitle id="bun" name="Булки" refs={refs.bunRef}/>
+        {bun.map((item) => {return <BurgerIngredient key={item._id} item={item} />})}
+
+        <BurgerIngredientTitle id="sauce" name="Соус" refs={refs.sauceRef}/>
+        {sauce.map((item) => {return <BurgerIngredient key={item._id} item={item} />})}
+
+    
+        <BurgerIngredientTitle id="main" name="Начинка" refs={refs.mainRef}/>
+        {main.map((item) => {return <BurgerIngredient key={item._id} item={item} />})}
+
       </div>
       {isOpenClosePopupIngredients && (
         <Modal>
-          <IngredientDetails  />
+          <IngredientDetails />
         </Modal>
       )}
     </section>
