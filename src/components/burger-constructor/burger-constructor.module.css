@@ -10,10 +10,11 @@
 }
 .list {
   padding: 0;
-  margin: 0 -20px 0 0;
+  margin: 0 -20px 0px 0;
   padding-right: 9px;
   list-style-type: none;
-  height: 470px;
+  min-width: 536px;
+  max-height: 460px;
   overflow-y: scroll;
 }
 
@@ -22,7 +23,11 @@
   position: relative;
   display: flex;
   align-items: center;
+  
 }
+.listItem:last-child {
+  margin: 0 0 0 0;
+} 
 
 .buttonContainer {
   margin-top: 40px;

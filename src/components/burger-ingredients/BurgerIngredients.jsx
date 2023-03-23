@@ -9,7 +9,7 @@ import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useSelector } from "react-redux";
 
-const BurgerIngredients = ({ handlerModelClose }) => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("bun");
   const isOpenClosePopupIngredients = useSelector(
     (state) => state.popupIngredientsReducer.isOpenCloseIngredient

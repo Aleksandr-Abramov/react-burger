@@ -7,6 +7,13 @@ import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { openOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from "uuid";
+import {
+  addIngredientConstuctor,
+  addBunIngredientConstuctor,
+} from "../../services/actions/BurgerConstructorReducer";
+import BurgerConstructorPlaceholder from "../burger-constructor-placeholder/BurgerConstructorPlaceholder";
 
 import {
   ConstructorElement,
@@ -14,17 +21,44 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+const BurgerConstructor = () => {
+  const isOpenCloseOrderPopup = useSelector(
+    (state) => state.popupOrderReducer.isOpenCloseOrder
+  );
+  const BurgerConstructorList = useSelector(
+    (state) => state.BurgerConstructorReducer.ingredients
+  );
+  const BurgerConsructorBun = useSelector(
+    (state) => state.BurgerConstructorReducer.bun
+  );
+  const elementDrag = useSelector(
+    (state) => state.BurgerConstructorReducer.isDrag
+  );
+  const borderColor = elementDrag ? "#4c4cff" : "#000";
 
-const BurgerConstructor = ({
-  handlerModelClose,
-}) => {
-  const isOpenCloseOrderPopup = useSelector((state) => state.popupOrderReducer.isOpenCloseOrder)
-  const ingredients = useSelector((state) => state.BurgerIngredientsReducer.ingredients)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handlerModelOpen = () => {
     dispatch(openOrderPopup());
-  }
+  };
+
+  const onDropHandler = (item) => {
+    if (item.type === "bun") {
+      return dispatch(addBunIngredientConstuctor(item));
+    }
+    return dispatch(addIngredientConstuctor(item));
+  };
+
+  const [, dropRef] = useDrop({
+    accept: "ingridient",
+    drop(item) {
+      onDropHandler(item);
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
+
   return (
     <section className={`${styles.section}`}>
       <div
@@ -34,37 +68,64 @@ const BurgerConstructor = ({
           alignItems: "end",
           gap: "16px",
         }}
+        ref={dropRef}
       >
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {BurgerConsructorBun ? (
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={BurgerConsructorBun && BurgerConsructorBun.name}
+            price={BurgerConsructorBun && BurgerConsructorBun.price}
+            thumbnail={BurgerConsructorBun && BurgerConsructorBun.image}
+          />
+        ) : (
+          <BurgerConstructorPlaceholder
+            title="Выберите начинку"
+            borderColor={borderColor}
+            type="top"
+          />
+        )}
 
         <ul className={`${styles.list} custom-scroll`}>
-          {ingredients.map((item) => {
-            return (
-              <li className={`${styles.listItem}`} key={item._id}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                />
-              </li>
-            );
-          })}
+          {BurgerConstructorList.length !== 0 ? (
+            BurgerConstructorList.map((item) => {
+              if (item.type === "bun") {
+                return null;
+              }
+              return (
+                <li className={`${styles.listItem}`} key={uuidv4()}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image}
+                  />
+                </li>
+              );
+            })
+          ) : (
+            <BurgerConstructorPlaceholder
+              title="Выберите начинку"
+              borderColor={borderColor}
+              type="middle"
+            />
+          )}
         </ul>
-
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {BurgerConsructorBun ? (
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={BurgerConsructorBun && BurgerConsructorBun.name}
+            price={BurgerConsructorBun && BurgerConsructorBun.price}
+            thumbnail={BurgerConsructorBun && BurgerConsructorBun.image}
+          />
+        ) : (
+          <BurgerConstructorPlaceholder
+            title="Выберите начинку"
+            borderColor={borderColor}
+            type="bottom"
+          />
+        )}
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.priceContainer}>

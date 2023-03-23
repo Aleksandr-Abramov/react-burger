@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./burger-ingredient.module.css";
-import PropTypes from "prop-types";
-import { ingridientPropType } from "../../utils/propType";
+// import PropTypes from "prop-types";
+// import { ingridientPropType } from "../../utils/propType";
 import { useDrag } from "react-dnd";
 
 import {
@@ -9,12 +9,16 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import { setIngredient } from "../../services/actions/BurgerIngredientReducer";
+import { setIngredient } from "../../services/actions/IngredientDetails";
 import { openIngredientPopup } from "../../services/actions/popupIngredientsReducer";
+import {
+  draggingOff,
+  draggingOn,
+} from "../../services/actions/BurgerConstructorReducer";
 
 const BurgerIngredient = ({ item }) => {
   const dispatch = useDispatch();
-  // const [a, aS] = useState({})
+
   const handlerModelOpen = (item) => {
     dispatch(setIngredient(item));
     dispatch(openIngredientPopup());
@@ -27,6 +31,14 @@ const BurgerIngredient = ({ item }) => {
       isDrag: monitor.isDragging(),
     }),
   });
+
+  React.useEffect(() => {
+    if (isDrag === true) {
+      dispatch(draggingOn());
+    } else {
+      dispatch(draggingOff());
+    }
+  }, [isDrag, dispatch]);
 
   return (
     <div
@@ -47,32 +59,6 @@ const BurgerIngredient = ({ item }) => {
       <Counter />
     </div>
   );
-
-  // return (
-  //   <>
-  //     {ingredients.map((item) => {
-  //       return (
-  //         <div
-  //           className={styles.container}
-  //           key={item._id}
-  //           onClick={() => handlerModelOpen(item)}
-  //         >
-  //           <img src={item.image} alt={item.name} className={styles.img} />
-  //           <div className={styles.priceContainer}>
-  //             <span className={`${styles.span} text text_type_digits-default`}>
-  //               {item.price}
-  //             </span>
-  //             <CurrencyIcon type="primary" />
-  //           </div>
-  //           <p className={`${styles.text} text text_type_main-default`}>
-  //             {item.name}
-  //           </p>
-  //           <Counter />
-  //         </div>
-  //       );
-  //     })}
-  //   </>
-  // );
 };
 
 // BurgerIngredient.propTypes = {

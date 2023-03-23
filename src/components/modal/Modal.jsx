@@ -6,6 +6,7 @@ import ModalOverlay from "../modal-overlay/ModalOverlay";
 import { useDispatch } from "react-redux";
 import { closeIngredientPopup } from "../../services/actions/popupIngredientsReducer";
 import { closeOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { clearIngredient } from "../../services/actions/IngredientDetails";
 
 
 const Modal = ({ children }) => {
@@ -32,7 +33,7 @@ const Modal = ({ children }) => {
     ) {
       dispatch(closeIngredientPopup())
       dispatch(closeOrderPopup())
-      //setIsOpenPopupError(false);
+      dispatch(clearIngredient())
     }
   }
 
@@ -48,9 +49,8 @@ const Modal = ({ children }) => {
   );
 };
 
-// Modal.propTypes = {
-//   handlerModelClose: PropTypes.func.isRequired,
-//   children: PropTypes.element.isRequired,
-// };
+Modal.propTypes = {
+  children: PropTypes.element.isRequired,
+};
 
 export default Modal;

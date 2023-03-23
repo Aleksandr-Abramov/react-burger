@@ -29,10 +29,10 @@ function App() {
       <div className="wrapper">
         <main className="main">
           <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients
-          />
-          <BurgerConstructor
-          />
+            <BurgerIngredients
+            />
+            <BurgerConstructor
+            />
           </DndProvider>
           
         </main>
