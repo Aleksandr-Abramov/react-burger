@@ -33,3 +33,6 @@
   width: 200px;
   color:red;
 }
+.noSelect {
+  /* user-select: none; */
+}

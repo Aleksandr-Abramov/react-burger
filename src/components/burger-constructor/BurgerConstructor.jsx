@@ -14,11 +14,11 @@ import {
   addBunIngredientConstuctor,
 } from "../../services/actions/BurgerConstructorReducer";
 import BurgerConstructorPlaceholder from "../burger-constructor-placeholder/BurgerConstructorPlaceholder";
+import DragCard from "./drag-card/DragCard";
 
 import {
   ConstructorElement,
   Button,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerConstructor = () => {
@@ -88,19 +88,18 @@ const BurgerConstructor = () => {
 
         <ul className={`${styles.list} custom-scroll`}>
           {BurgerConstructorList.length !== 0 ? (
-            BurgerConstructorList.map((item) => {
+            BurgerConstructorList.map((item, index) => {
               if (item.type === "bun") {
                 return null;
               }
               return (
-                <li className={`${styles.listItem}`} key={uuidv4()}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
-                  />
-                </li>
+                <DragCard
+                  styles={styles.listItem}
+                  key={uuidv4()}
+                  item={item}
+                  id={item._id}
+                  index={index}
+                />
               );
             })
           ) : (
