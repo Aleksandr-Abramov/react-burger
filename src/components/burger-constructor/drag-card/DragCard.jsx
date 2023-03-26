@@ -68,8 +68,9 @@ const DragCard = ({ styles, item, id, index }) => {
   refDrag(refDrop(ref));
 
   const handleClose = (item) => {
-    console.log(item);
-    }
+    let cardsList = cards.filter((ingredient) => ingredient.key !== item.key)
+    dispatch(deleteIngredient(cardsList));
+  }
 
   return (
     <li className={styles} ref={ref} style={{ opacity: opacity }}>

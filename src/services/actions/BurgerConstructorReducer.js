@@ -5,4 +5,4 @@ export const addBunIngredientConstuctor = (peyload) => ({type:ADD_BUN_INGREDIENT
 export const draggingOn = () => ({type: DRAG_ON})
 export const draggingOff = () => ({type: DRAG_OFF})
 export const changeIngredient = (peyload) => ({type:CHANGE_INGEDIENT, peyload})
-export const deleteIngredient = (peyload) => ({type:CHANGE_INGEDIENT, peyload})
+export const deleteIngredient = (peyload) => ({type:DELETE_INGREDIENT, peyload})

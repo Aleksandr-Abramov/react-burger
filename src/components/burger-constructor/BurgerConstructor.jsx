@@ -43,6 +43,7 @@ const BurgerConstructor = () => {
   };
 
   const onDropHandler = (item) => {
+    
     if (item.type === "bun") {
       return dispatch(addBunIngredientConstuctor(item));
     }
@@ -89,6 +90,7 @@ const BurgerConstructor = () => {
         <ul className={`${styles.list} custom-scroll`}>
           {BurgerConstructorList.length !== 0 ? (
             BurgerConstructorList.map((item, index) => {
+              // item.re = index;
               if (item.type === "bun") {
                 return null;
               }
