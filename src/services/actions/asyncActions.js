@@ -9,6 +9,11 @@ export const fetchIngredients = () => {
         }
         return Promise.reject(res.status);
       })
-      .then((json) => dispatch(getIngredients(json.data)));
+      .then((json) => {
+        let newArr = json.data.map((item) => {
+          return {...item, counter: 0}
+        });
+        dispatch(getIngredients(newArr))
+      });
   };
 };

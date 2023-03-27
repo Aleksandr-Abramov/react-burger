@@ -9,7 +9,7 @@ import { changeIngredient, deleteIngredient } from "../../../services/actions/Bu
 
 const DragCard = ({ styles, item, id, index }) => {
 
-    
+
   const cards = useSelector(
     (state) => state.BurgerConstructorReducer.ingredients
   );
@@ -20,8 +20,8 @@ const DragCard = ({ styles, item, id, index }) => {
     const newCards = [...cards];
     newCards.splice(dragIndex, 1);
     newCards.splice(hoverIndex, 0, dragCard);
-    console.log(newCards);
     dispatch(changeIngredient(newCards));
+
   };
 
   const ref = React.useRef(null);
