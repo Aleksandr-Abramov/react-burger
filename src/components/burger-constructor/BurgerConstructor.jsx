@@ -43,7 +43,6 @@ const BurgerConstructor = () => {
   };
 
   const onDropHandler = (item) => {
-    
     if (item.type === "bun") {
       return dispatch(addBunIngredientConstuctor(item));
     }
@@ -59,6 +58,13 @@ const BurgerConstructor = () => {
       isOver: monitor.isOver(),
     }),
   });
+
+  const price = React.useMemo(() => {
+    return (
+      (BurgerConsructorBun ? BurgerConsructorBun.price * 2 : 0) +
+      BurgerConstructorList.reduce((sum, value) => sum + value.price, 0)
+    );
+  }, [BurgerConsructorBun, BurgerConstructorList]);
 
   return (
     <section className={`${styles.section}`}>
@@ -90,9 +96,6 @@ const BurgerConstructor = () => {
         <ul className={`${styles.list} custom-scroll`}>
           {BurgerConstructorList.length !== 0 ? (
             BurgerConstructorList.map((item, index) => {
-              if (item.type === "bun") {
-                return null;
-              }
               return (
                 <DragCard
                   styles={styles.listItem}
@@ -130,7 +133,7 @@ const BurgerConstructor = () => {
       <div className={styles.buttonContainer}>
         <div className={styles.priceContainer}>
           <span className={`${styles.span} text text_type_digits-medium`}>
-            23
+            {price}
           </span>
           <img src={image} alt="" />
         </div>

@@ -5,11 +5,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import { changeIngredient, deleteIngredient } from "../../../services/actions/BurgerConstructorReducer";
+import {
+  changeIngredient,
+  deleteIngredient,
+} from "../../../services/actions/BurgerConstructorReducer";
 
 const DragCard = ({ styles, item, id, index }) => {
-
-
   const cards = useSelector(
     (state) => state.BurgerConstructorReducer.ingredients
   );
@@ -21,7 +22,6 @@ const DragCard = ({ styles, item, id, index }) => {
     newCards.splice(dragIndex, 1);
     newCards.splice(hoverIndex, 0, dragCard);
     dispatch(changeIngredient(newCards));
-
   };
 
   const ref = React.useRef(null);
@@ -68,9 +68,9 @@ const DragCard = ({ styles, item, id, index }) => {
   refDrag(refDrop(ref));
 
   const handleClose = (item) => {
-    let cardsList = cards.filter((ingredient) => ingredient.key !== item.key)
+    let cardsList = cards.filter((ingredient) => ingredient.key !== item.key);
     dispatch(deleteIngredient(cardsList));
-  }
+  };
 
   return (
     <li className={styles} ref={ref} style={{ opacity: opacity }}>

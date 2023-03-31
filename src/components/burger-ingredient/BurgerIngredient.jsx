@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./burger-ingredient.module.css";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 // import { ingridientPropType } from "../../utils/propType";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import {
   Counter,
   CurrencyIcon,
@@ -16,30 +15,14 @@ import {
   draggingOn,
 } from "../../services/actions/BurgerConstructorReducer";
 
-
-
-const BurgerIngredient = ({ item }) => {
+const BurgerIngredient = ({ item, count }) => {
   const dispatch = useDispatch();
-  const burgerConstructor = useSelector(
-    (state) => state.BurgerIngredientsReducer.ingredients
-  );
-  const ingredientsConstructor = useSelector(
-    (state) => state.BurgerConstructorReducer.ingredients
-  );
-  const [count, setCount] = React.useState()
-
-
-  // Любые варианты которые я перебирал, все они оказались не верными. Не работают.
-  const a = React.useMemo(() => {
-    const bCOunt = burgerConstructor.filter(ing => ing._id === item._id)
-    return setCount(bCOunt.length);
-  },[burgerConstructor, item._id])
 
   const handlerModelOpen = (item) => {
     dispatch(setIngredient(item));
     dispatch(openIngredientPopup());
   };
-  
+
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingridient",
     item: item,
@@ -47,7 +30,7 @@ const BurgerIngredient = ({ item }) => {
       isDrag: monitor.isDragging(),
     }),
   });
-  
+
   React.useEffect(() => {
     if (isDrag === true) {
       dispatch(draggingOn());
@@ -72,16 +55,14 @@ const BurgerIngredient = ({ item }) => {
       <p className={`${styles.text} text text_type_main-default`}>
         {item.name}
       </p>
-      <Counter count={count}/>
+      <Counter count={count} />
     </div>
   );
 };
 
-// BurgerIngredient.propTypes = {
-//   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
-//   title: PropTypes.string.isRequired,
-//   titleId: PropTypes.string.isRequired,
-//   handlerModelOpen: PropTypes.func.isRequired,
-// };
+BurgerIngredient.propTypes = {
+  item: PropTypes.object.isRequired,
+  count: PropTypes.number.isRequired,
+};
 
 export default BurgerIngredient;

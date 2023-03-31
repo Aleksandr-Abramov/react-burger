@@ -7,10 +7,10 @@ import { Provider } from "react-redux";
 import { rootReducer } from "./services/reducers";
 
 
+
+const store = configureStore({reducer: rootReducer})
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const store = configureStore({
-  reducer: rootReducer
-})
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

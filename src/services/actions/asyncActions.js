@@ -10,10 +10,19 @@ export const fetchIngredients = () => {
         return Promise.reject(res.status);
       })
       .then((json) => {
-        let newArr = json.data.map((item) => {
-          return {...item, counter: 0}
-        });
-        dispatch(getIngredients(newArr))
-      });
+        dispatch(getIngredients(json.data));
+      })
+      .catch((err) => console.log(err));
   };
+};
+
+export const fetchIngredients2 = () => {
+  return fetch("https://norma.nomoreparties.space/api/ingredients").then(
+    (res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    }
+  );
 };

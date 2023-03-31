@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
@@ -8,6 +8,7 @@ import BurgerIngredientTitle from "../burger-ingredient-title/BurgerIngredientTi
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useSelector } from "react-redux";
+import { useInView } from "react-intersection-observer";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("bun");
@@ -18,32 +19,58 @@ const BurgerIngredients = () => {
     (state) => state.BurgerIngredientsReducer.ingredients
   );
 
+  const BurgerConstructorList = useSelector(
+    (state) => state.BurgerConstructorReducer.ingredients
+  );
+
+  const BurgerConstructorBun = useSelector(
+    (state) => state.BurgerConstructorReducer.bun
+  );
+
+  const [bunsRef, inViewBuns, bunElement] = useInView({
+    threshold: 0,
+  });
+
+  const [saucesRef, inViewSauces, sauceElement] = useInView({
+    threshold: 0,
+  });
+
+  const [mainsRef, inViewMains, mainElement] = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inViewBuns) {
+      setCurrent("bun");
+    } else if (inViewSauces) {
+      setCurrent("sauce");
+    } else if (inViewMains) {
+      setCurrent("main");
+    }
+  }, [inViewBuns, inViewSauces, inViewMains]);
+
   const refs = {
-    bunRef: React.useRef(),
-    mainRef: React.useRef(),
-    sauceRef: React.useRef(),
+    bunRef: bunsRef,
+    mainRef: mainsRef,
+    sauceRef: saucesRef,
   };
 
   const onTabClick = (tab) => {
-    switch (tab) {
-      case "sauce":
-        refs.sauceRef.current.scrollIntoView({
-          block: "start",
-          behavior: "smooth",
-        });
-        break;
-      case "main":
-        refs.mainRef.current.scrollIntoView({
-          block: "start",
-          behavior: "smooth",
-        });
-        break;
-      default:
-        refs.bunRef.current.scrollIntoView({
-          block: "start",
-          behavior: "smooth",
-        });
-        break;
+    if (tab === "bun") {
+      bunElement.target.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
+    } else if (tab === "sauce") {
+      sauceElement.target.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
+    } else if (tab === "main") {
+      mainElement.target.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
     }
     setCurrent(tab);
   };
@@ -63,6 +90,38 @@ const BurgerIngredients = () => {
     [ingredients]
   );
 
+  const mainStatistics = React.useMemo(() => {
+    if (main.length === 0) {
+      return {};
+    }
+    let res = {};
+    const items = BurgerConstructorList.filter((el) => el.type === "main");
+    return items.reduce((acc, e) => {
+      acc[e._id] = (acc[e._id] || 0) + 1;
+      return acc;
+    }, res);
+  }, [main, BurgerConstructorList]);
+
+  const sauceStatistics = React.useMemo(() => {
+    if (sauce.length === 0) {
+      return {};
+    }
+    let res = {};
+    const items = BurgerConstructorList.filter((el) => el.type === "sauce");
+    return items.reduce((acc, e) => {
+      acc[e._id] = (acc[e._id] || 0) + 1;
+      return acc;
+    }, res);
+  }, [sauce, BurgerConstructorList]);
+
+  const countBun = React.useMemo(() => {
+    if (bun.length === 0) {
+      return {};
+    }
+    const items = BurgerConstructorBun || 0;
+    return { [`${items._id}`]: 2 };
+  }, [bun, BurgerConstructorBun]);
+
   return (
     <section className={styles.section}>
       <h1 className={`mt-10 mb-10 text text_type_main-large`}>
@@ -80,16 +139,38 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
       <div className={`${styles.container} custom-scroll`}>
-        <BurgerIngredientTitle id="bun" name="Булки" refs={refs.bunRef}/>
-        {bun.map((item) => {return <BurgerIngredient key={item._id} item={item} />})}
+        <BurgerIngredientTitle id="bun" name="Булки" refs={refs.bunRef} />
+        {bun.map((item) => {
+          return (
+            <BurgerIngredient
+              key={item._id}
+              item={item}
+              count={countBun[item._id] || 0}
+            />
+          );
+        })}
 
-        <BurgerIngredientTitle id="sauce" name="Соус" refs={refs.sauceRef}/>
-        {sauce.map((item) => {return <BurgerIngredient key={item._id} item={item} />})}
+        <BurgerIngredientTitle id="sauce" name="Соус" refs={refs.sauceRef} />
+        {sauce.map((item) => {
+          return (
+            <BurgerIngredient
+              key={item._id}
+              item={item}
+              count={sauceStatistics[item._id] || 0}
+            />
+          );
+        })}
 
-    
-        <BurgerIngredientTitle id="main" name="Начинка" refs={refs.mainRef}/>
-        {main.map((item) => {return <BurgerIngredient key={item._id} item={item} />})}
-
+        <BurgerIngredientTitle id="main" name="Начинка" refs={refs.mainRef} />
+        {main.map((item) => {
+          return (
+            <BurgerIngredient
+              key={item._id}
+              item={item}
+              count={mainStatistics[item._id] || 0}
+            />
+          );
+        })}
       </div>
       {isOpenClosePopupIngredients && (
         <Modal>
