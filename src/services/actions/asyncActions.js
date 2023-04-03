@@ -3,6 +3,7 @@ import {
   GET_INGRIDIENTS_ERRORE,
   GET_INGRIDIENTS_SUCCESS,
 } from "../reducers/BurgerIngredientsReducer";
+import { BASE_URL } from "../../utils/api";
 
 export const fetchIngredients = () => {
   return function (dispatch) {
@@ -10,7 +11,7 @@ export const fetchIngredients = () => {
       type: GET_INGRIDIENTS_SUCCESS,
       payload: true,
     });
-    fetch("https://norma.nomoreparties.space/api/ingredients")
+    fetch(`${BASE_URL}/ingredients`)
       .then((res) => {
         if (res.ok) {
           return res.json();

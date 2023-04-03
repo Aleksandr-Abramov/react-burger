@@ -1,7 +1,8 @@
-const URLAPI = "https://norma.nomoreparties.space/api/ingredients";
+export const BASE_URL = "https://norma.nomoreparties.space/api"
+
 class Api {
-  constructor(urlApi) {
-    this.urlApi = urlApi;
+  constructor(BASE_URL) {
+    this.urlApi = `${BASE_URL}/ingredients`;
   }
 
   validationJson(res) {
@@ -21,6 +22,6 @@ class Api {
   }
 }
 
-const api = new Api(URLAPI);
+const api = new Api(BASE_URL);
 
 export default api;

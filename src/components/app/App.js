@@ -1,13 +1,13 @@
 import React from "react";
-import "./App.css";
-import AppHeader from "./components/app-header/AppHeader";
-import BurgerIngredients from "./components/burger-ingredients/BurgerIngredients";
-import BurgerConstructor from "./components/burger-constructor/BurgerConstructor";
+import styles from "./app.module.css";
+import AppHeader from "../app-header/AppHeader";
+import BurgerIngredients from "../burger-ingredients/BurgerIngredients";
+import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch } from "react-redux";
 
-import { fetchIngredients } from "./services/actions/asyncActions";
+import { fetchIngredients } from "../../services/actions/asyncActions";
 function App() {
   const dispatch = useDispatch();
 
@@ -17,11 +17,11 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">
+
         <AppHeader />
-      </header>
-      <div className="wrapper">
-        <main className="main">
+
+      <div className={styles.wrapper}>
+        <main className={styles.main}>
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />
             <BurgerConstructor />

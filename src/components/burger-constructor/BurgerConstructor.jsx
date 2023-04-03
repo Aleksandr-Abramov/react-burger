@@ -81,7 +81,7 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={BurgerConsructorBun && BurgerConsructorBun.name}
+            text={BurgerConsructorBun && `${BurgerConsructorBun.name} (верх)`}
             price={BurgerConsructorBun && BurgerConsructorBun.price}
             thumbnail={BurgerConsructorBun && BurgerConsructorBun.image}
           />
@@ -118,7 +118,7 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={BurgerConsructorBun && BurgerConsructorBun.name}
+            text={BurgerConsructorBun && `${BurgerConsructorBun.name} (низ)`}
             price={BurgerConsructorBun && BurgerConsructorBun.price}
             thumbnail={BurgerConsructorBun && BurgerConsructorBun.image}
           />
