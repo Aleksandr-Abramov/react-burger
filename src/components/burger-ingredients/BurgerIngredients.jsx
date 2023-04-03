@@ -9,9 +9,15 @@ import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
+import { closeIngredientPopup } from "../../services/actions/popupIngredientsReducer";
+import { closeOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { clearIngredient } from "../../services/actions/IngredientDetails";
+import { useDispatch } from "react-redux";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("bun");
+  const dispatch = useDispatch();
+
   const isOpenClosePopupIngredients = useSelector(
     (state) => state.popupIngredientsReducer.isOpenCloseIngredient
   );
@@ -54,6 +60,19 @@ const BurgerIngredients = () => {
     mainRef: mainsRef,
     sauceRef: saucesRef,
   };
+
+  function handlerModelClose(e) {
+    e.stopPropagation();
+    if (
+      e.target.dataset.overlay === "overlay" ||
+      e.currentTarget.type === "button" ||
+      e.key === "Escape"
+    ) {
+      dispatch(closeIngredientPopup());
+      dispatch(closeOrderPopup());
+      dispatch(clearIngredient());
+    }
+  }
 
   const onTabClick = (tab) => {
     if (tab === "bun") {
@@ -173,7 +192,7 @@ const BurgerIngredients = () => {
         })}
       </div>
       {isOpenClosePopupIngredients && (
-        <Modal>
+        <Modal handlerModelClose={handlerModelClose}>
           <IngredientDetails />
         </Modal>
       )}

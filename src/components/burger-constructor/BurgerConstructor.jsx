@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "./burger-constructor.module.css";
 import image from "../../images/price.svg";
-//import PropTypes from "prop-types";
-//import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { openOrderPopup } from "../../services/actions/popupOrderRecucer";
 import { useDrop } from "react-dnd";
-import { v4 as uuidv4 } from "uuid";
+import { closeIngredientPopup } from "../../services/actions/popupIngredientsReducer";
+import { closeOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { clearIngredient } from "../../services/actions/IngredientDetails";
+import { fetchOrderPost } from "../../utils/api";
+
 import {
   addIngredientConstuctor,
   addBunIngredientConstuctor,
@@ -38,9 +40,33 @@ const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
+  const handelPost = () => {
+    let ingredientsIdList = BurgerConstructorList.map((item) => item._id);
+    if(BurgerConsructorBun) {
+      ingredientsIdList = [BurgerConsructorBun._id,...ingredientsIdList,BurgerConsructorBun._id]
+    } else {
+      ingredientsIdList = [...ingredientsIdList]
+    }
+    dispatch(fetchOrderPost(ingredientsIdList));
+  };
+
   const handlerModelOpen = () => {
+    handelPost();
     dispatch(openOrderPopup());
   };
+
+  function handlerModelClose(e) {
+    e.stopPropagation();
+    if (
+      e.target.dataset.overlay === "overlay" ||
+      e.currentTarget.type === "button" ||
+      e.key === "Escape"
+    ) {
+      dispatch(closeIngredientPopup());
+      dispatch(closeOrderPopup());
+      dispatch(clearIngredient());
+    }
+  }
 
   const onDropHandler = (item) => {
     if (item.type === "bun") {
@@ -99,7 +125,7 @@ const BurgerConstructor = () => {
               return (
                 <DragCard
                   styles={styles.listItem}
-                  key={uuidv4()}
+                  key={item.key}
                   item={item}
                   id={item._id}
                   index={index}
@@ -142,12 +168,17 @@ const BurgerConstructor = () => {
           type="primary"
           size="large"
           onClick={handlerModelOpen}
+          disabled={
+            BurgerConstructorList.length !== 0 && BurgerConsructorBun !== null
+              ? false
+              : true
+          }
         >
           Оформить заказ
         </Button>
       </div>
       {isOpenCloseOrderPopup && (
-        <Modal>
+        <Modal handlerModelClose={handlerModelClose}>
           <OrderDetails />
         </Modal>
       )}
@@ -155,8 +186,4 @@ const BurgerConstructor = () => {
   );
 };
 
-// BurgerConstructor.propTypes = {
-//   ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
-//   handlerModelOpen: PropTypes.func.isRequired,
-// };
 export default BurgerConstructor;

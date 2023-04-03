@@ -9,6 +9,7 @@ import {
   changeIngredient,
   deleteIngredient,
 } from "../../../services/actions/BurgerConstructorReducer";
+import PropTypes from "prop-types";
 
 const DragCard = ({ styles, item, id, index }) => {
   const cards = useSelector(
@@ -85,4 +86,12 @@ const DragCard = ({ styles, item, id, index }) => {
     </li>
   );
 };
+
+DragCard.propTypes = {
+  styles: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  item: PropTypes.object.isRequired,
+};
+
 export default DragCard;

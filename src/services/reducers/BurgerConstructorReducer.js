@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const ADD_BUN_INGREDIENT_BUN = "ADD_BUN_INGREDIENT_BUN";
 export const DRAG_ON = "DRAG_ON";
@@ -17,7 +15,7 @@ const initialState = {
 export const BurgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_INGREDIENT:
-      return { ...state, ingredients: [...state.ingredients, {...action.peyload, key: uuidv4()}] };
+      return { ...state, ingredients: [...state.ingredients, action.peyload] };
     
     case CHANGE_INGEDIENT:
       return { ...state, ingredients: [ ...action.peyload] };

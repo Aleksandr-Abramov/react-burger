@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./burger-ingredient.module.css";
 import PropTypes from "prop-types";
-// import { ingridientPropType } from "../../utils/propType";
 import { useDrag } from "react-dnd";
 import {
   Counter,

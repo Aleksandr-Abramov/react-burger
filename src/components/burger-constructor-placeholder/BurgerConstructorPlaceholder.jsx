@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../burger-constructor-placeholder/BurgerConstructorPlaceholder.module.css";
+import PropTypes from "prop-types";
 
 const BurgerConstructorPlaceholder = ({ title, borderColor, type }) => {
   let styleType = undefined;
@@ -18,5 +19,11 @@ const BurgerConstructorPlaceholder = ({ title, borderColor, type }) => {
       {title}
     </div>
   );
+};
+
+BurgerConstructorPlaceholder.propTypes = {
+  title: PropTypes.string.isRequired,
+  borderColor: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 export default BurgerConstructorPlaceholder;
