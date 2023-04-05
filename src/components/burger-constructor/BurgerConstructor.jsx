@@ -9,7 +9,7 @@ import { useDrop } from "react-dnd";
 import { closeIngredientPopup } from "../../services/actions/popupIngredientsReducer";
 import { closeOrderPopup } from "../../services/actions/popupOrderRecucer";
 import { clearIngredient } from "../../services/actions/IngredientDetails";
-import { fetchOrderPost } from "../../utils/api";
+import { fetchOrderPost } from "../../services/actions/asyncActions";
 
 import {
   addIngredientConstuctor,

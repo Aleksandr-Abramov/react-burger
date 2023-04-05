@@ -6,7 +6,7 @@ import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch } from "react-redux";
-import { fetchIngredients } from "../../utils/api";
+import { fetchIngredients } from "../../services/actions/asyncActions";
 
 function App() {
   const dispatch = useDispatch();
