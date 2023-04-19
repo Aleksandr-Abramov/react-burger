@@ -1,23 +1,97 @@
 import React from "react";
 import styles from "./burger-constructor.module.css";
 import image from "../../images/price.svg";
-import PropTypes from "prop-types";
-import { ingridientPropType } from "../../utils/propType";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
+import { useSelector, useDispatch } from "react-redux";
+import { openOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { useDrop } from "react-dnd";
+import { closeIngredientPopup } from "../../services/actions/popupIngredientsReducer";
+import { closeOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { clearIngredient } from "../../services/actions/IngredientDetails";
+import { fetchOrderPost } from "../../services/actions/asyncActions";
+
+import {
+  addIngredientConstuctor,
+  addBunIngredientConstuctor,
+} from "../../services/actions/BurgerConstructorReducer";
+import BurgerConstructorPlaceholder from "../burger-constructor-placeholder/BurgerConstructorPlaceholder";
+import DragCard from "./drag-card/DragCard";
 
 import {
   ConstructorElement,
   Button,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructor = ({
-  ingredients,
-  handlerModelOpen,
-  isOpenPopupOrder,
-  handlerModelClose,
-}) => {
+const BurgerConstructor = () => {
+  const isOpenCloseOrderPopup = useSelector(
+    (state) => state.popupOrderReducer.isOpenCloseOrder
+  );
+  const BurgerConstructorList = useSelector(
+    (state) => state.BurgerConstructorReducer.ingredients
+  );
+  const BurgerConsructorBun = useSelector(
+    (state) => state.BurgerConstructorReducer.bun
+  );
+  const elementDrag = useSelector(
+    (state) => state.BurgerConstructorReducer.isDrag
+  );
+  const borderColor = elementDrag ? "#4c4cff" : "#000";
+
+  const dispatch = useDispatch();
+
+  const handelPost = () => {
+    let ingredientsIdList = BurgerConstructorList.map((item) => item._id);
+    if(BurgerConsructorBun) {
+      ingredientsIdList = [BurgerConsructorBun._id,...ingredientsIdList,BurgerConsructorBun._id]
+    } else {
+      ingredientsIdList = [...ingredientsIdList]
+    }
+    dispatch(fetchOrderPost(ingredientsIdList));
+  };
+
+  const handlerModelOpen = () => {
+    handelPost();
+    dispatch(openOrderPopup());
+  };
+
+  function handlerModelClose(e) {
+    e.stopPropagation();
+    if (
+      e.target.dataset.overlay === "overlay" ||
+      e.currentTarget.type === "button" ||
+      e.key === "Escape"
+    ) {
+      dispatch(closeIngredientPopup());
+      dispatch(closeOrderPopup());
+      dispatch(clearIngredient());
+    }
+  }
+
+  const onDropHandler = (item) => {
+    if (item.type === "bun") {
+      return dispatch(addBunIngredientConstuctor(item));
+    }
+    return dispatch(addIngredientConstuctor(item));
+  };
+
+  const [, dropRef] = useDrop({
+    accept: "ingridient",
+    drop(item) {
+      onDropHandler(item);
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
+
+  const price = React.useMemo(() => {
+    return (
+      (BurgerConsructorBun ? BurgerConsructorBun.price * 2 : 0) +
+      BurgerConstructorList.reduce((sum, value) => sum + value.price, 0)
+    );
+  }, [BurgerConsructorBun, BurgerConstructorList]);
+
   return (
     <section className={`${styles.section}`}>
       <div
@@ -27,42 +101,65 @@ const BurgerConstructor = ({
           alignItems: "end",
           gap: "16px",
         }}
+        ref={dropRef}
       >
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {BurgerConsructorBun ? (
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={BurgerConsructorBun && `${BurgerConsructorBun.name} (верх)`}
+            price={BurgerConsructorBun && BurgerConsructorBun.price}
+            thumbnail={BurgerConsructorBun && BurgerConsructorBun.image}
+          />
+        ) : (
+          <BurgerConstructorPlaceholder
+            title="Выберите начинку"
+            borderColor={borderColor}
+            type="top"
+          />
+        )}
 
         <ul className={`${styles.list} custom-scroll`}>
-          {ingredients.map((item) => {
-            return (
-              <li className={`${styles.listItem}`} key={item._id}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
+          {BurgerConstructorList.length !== 0 ? (
+            BurgerConstructorList.map((item, index) => {
+              return (
+                <DragCard
+                  styles={styles.listItem}
+                  key={item.key}
+                  item={item}
+                  id={item._id}
+                  index={index}
                 />
-              </li>
-            );
-          })}
+              );
+            })
+          ) : (
+            <BurgerConstructorPlaceholder
+              title="Выберите начинку"
+              borderColor={borderColor}
+              type="middle"
+            />
+          )}
         </ul>
-
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-          thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-        />
+        {BurgerConsructorBun ? (
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={BurgerConsructorBun && `${BurgerConsructorBun.name} (низ)`}
+            price={BurgerConsructorBun && BurgerConsructorBun.price}
+            thumbnail={BurgerConsructorBun && BurgerConsructorBun.image}
+          />
+        ) : (
+          <BurgerConstructorPlaceholder
+            title="Выберите начинку"
+            borderColor={borderColor}
+            type="bottom"
+          />
+        )}
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.priceContainer}>
           <span className={`${styles.span} text text_type_digits-medium`}>
-            23
+            {price}
           </span>
           <img src={image} alt="" />
         </div>
@@ -71,11 +168,16 @@ const BurgerConstructor = ({
           type="primary"
           size="large"
           onClick={handlerModelOpen}
+          disabled={
+            BurgerConstructorList.length !== 0 && BurgerConsructorBun !== null
+              ? false
+              : true
+          }
         >
           Оформить заказ
         </Button>
       </div>
-      {isOpenPopupOrder && (
+      {isOpenCloseOrderPopup && (
         <Modal handlerModelClose={handlerModelClose}>
           <OrderDetails />
         </Modal>
@@ -84,8 +186,4 @@ const BurgerConstructor = ({
   );
 };
 
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingridientPropType).isRequired,
-  handlerModelOpen: PropTypes.func.isRequired,
-};
 export default BurgerConstructor;

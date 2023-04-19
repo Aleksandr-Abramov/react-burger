@@ -19,18 +19,22 @@ const Modal = ({ children, handlerModelClose }) => {
 
   return (
     <ModalOverlay handlerModelClose={handlerModelClose}>
-    <div className={styles.modal}>
-      <button data-close="close" type="button" className={styles.icon} onClick={handlerModelClose}>
-        <CloseIcon type="primary" />
-      </button>
-      {children}
-    </div>
+      <div className={styles.modal}>
+        <button
+          data-close="close"
+          type="button"
+          className={styles.icon}
+          onClick={handlerModelClose}
+        >
+          <CloseIcon type="primary" />
+        </button>
+        {children}
+      </div>
     </ModalOverlay>
   );
 };
 
 Modal.propTypes = {
-  handlerModelClose: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
 };
 
