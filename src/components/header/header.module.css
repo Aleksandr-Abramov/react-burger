@@ -6,10 +6,9 @@
   padding: 16px 0 16px 0;
   list-style-type: none;
   display: grid;
-  grid-template-columns: minmax(max-content, min-content) minmax(
-      max-content,
-      min-content
-    ) 1fr minmax(max-content, min-content);
+  grid-template-columns:
+    minmax(max-content, min-content) minmax(max-content, min-content)
+    1fr minmax(max-content, min-content);
   justify-items: center;
   align-items: center;
 }
@@ -17,6 +16,7 @@
   max-width: 1240px;
   margin: 0 auto;
 }
+
 .menuItem:nth-child(2) {
   margin-left: 25px;
 }
@@ -25,4 +25,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+}
+.Logo {
+  margin-left: -150px;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./app-header.module.css";
+import styles from "./header.module.css";
 import {
   Logo,
   BurgerIcon,
@@ -7,7 +7,7 @@ import {
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const AppHeader = () => {
+const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
@@ -34,7 +34,7 @@ const AppHeader = () => {
                 </span>
               </a>
             </li>
-            <li className={`${styles.menuItem}`}>
+            <li className={`${styles.menuItem} ${styles.Logo}`}>
               <a href="/" className={styles.menuLink}>
                 <Logo />
               </a>
@@ -56,4 +56,4 @@ const AppHeader = () => {
   );
 };
 
-export default AppHeader;
+export default Header;
