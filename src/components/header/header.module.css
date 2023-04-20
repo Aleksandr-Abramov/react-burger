@@ -26,6 +26,9 @@
   align-items: center;
   text-decoration: none;
 }
+.menuLinkActive {
+  color: white;
+}
 .Logo {
   margin-left: -150px;
 }

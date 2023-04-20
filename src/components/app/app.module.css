@@ -2,9 +2,9 @@
   max-width: 1240px;
   margin: 0 auto;
 }
-/* .header {
+.header {
   background: var(--background);
-} */
+}
 .main {
   display: grid;
   grid-template-columns: 1fr 1fr;

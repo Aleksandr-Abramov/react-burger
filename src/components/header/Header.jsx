@@ -1,11 +1,15 @@
 import React from "react";
 import styles from "./header.module.css";
+import { NavLink } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
   ProfileIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+const activeClass = `${styles.menuLink} ${styles.menuLinkActive} text text_type_main-default`;
+const unActiveClass = `${styles.menuLink} text text_type_main-default text_color_inactive`;
 
 const Header = () => {
   return (
@@ -14,40 +18,60 @@ const Header = () => {
         <nav>
           <ul className={styles.menu}>
             <li className={`${styles.menuItem}`}>
-              <a href="/" className={styles.menuLink}>
-                <BurgerIcon type="primery" />
-                <span
-                  style={{ color: "white" }}
-                  className={`text text_type_main-default pl-2`}
-                >
-                  Конструктор
-                </span>
-              </a>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? activeClass : unActiveClass
+                }
+              >
+                {({ isActive }) => {
+                  return (
+                    <>
+                      <BurgerIcon type={isActive ? "primery" : "secondary"} />
+                      <span className={`pl-2`}>Конструктор</span>
+                    </>
+                  );
+                }}
+              </NavLink>
             </li>
             <li className={`${styles.menuItem}`}>
-              <a href="/" className={styles.menuLink}>
-                <ListIcon type="secondary" />
-                <span
-                  className={`text text_type_main-default text_color_inactive pl-2`}
-                >
-                  Лента заказов
-                </span>
-              </a>
+              <NavLink
+                to="/order"
+                className={({ isActive }) =>
+                  isActive ? activeClass : unActiveClass
+                }
+              >
+                {({ isActive }) => {
+                  return (
+                    <>
+                      <BurgerIcon type={isActive ? "primery" : "secondary"} />
+                      <span className={`pl-2`}>Лента заказов</span>
+                    </>
+                  );
+                }}
+              </NavLink>
             </li>
             <li className={`${styles.menuItem} ${styles.Logo}`}>
-              <a href="/" className={styles.menuLink}>
+              <NavLink to="/" className={styles.menuLink}>
                 <Logo />
-              </a>
+              </NavLink>
             </li>
             <li className={`${styles.menuItem}`}>
-              <a href="/" className={styles.menuLink}>
-                <ProfileIcon type="secondary" />
-                <span
-                  className={`text text_type_main-default text_color_inactive pl-2`}
-                >
-                  Личный кабинет
-                </span>
-              </a>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? activeClass : unActiveClass
+                }
+              >
+                {({ isActive }) => {
+                  return (
+                    <>
+                      <ProfileIcon type={isActive ? "primery" : "secondary"} />
+                      <span className={`pl-2`}>Личный кабинет</span>
+                    </>
+                  );
+                }}
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -55,5 +79,44 @@ const Header = () => {
     </header>
   );
 };
-
+{
+  /* <ul className={styles.menu}>
+<li className={`${styles.menuItem}`}>
+  <NavLink to="/" className={styles.menuLink}>
+    <BurgerIcon type="primery" />
+    <span
+      style={{ color: "white" }}
+      className={`text text_type_main-default pl-2`}
+    >
+      Конструктор
+    </span>
+  </NavLink>
+</li>
+<li className={`${styles.menuItem}`}>
+  <NavLink to="/" className={styles.menuLink}>
+    <ListIcon type="secondary" />
+    <span
+      className={`text text_type_main-default text_color_inactive pl-2`}
+    >
+      Лента заказов
+    </span>
+  </NavLink>
+</li>
+<li className={`${styles.menuItem} ${styles.Logo}`}>
+  <NavLink to="/" className={styles.menuLink}>
+    <Logo />
+  </NavLink>
+</li>
+<li className={`${styles.menuItem}`}>
+  <NavLink to="/profile" className={styles.menuLink}>
+    <ProfileIcon type="secondary" />
+    <span
+      className={`text text_type_main-default text_color_inactive pl-2`}
+    >
+      Личный кабинет
+    </span>
+  </NavLink>
+</li>
+</ul> */
+}
 export default Header;
