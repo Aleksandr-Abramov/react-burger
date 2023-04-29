@@ -8,11 +8,7 @@ import BurgerIngredients from "../../burger-ingredients/BurgerIngredients";
 import { fetchIngredients } from "../../../services/actions/asyncActions";
 
 const Home = () => {
-  const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(fetchIngredients());
-  }, [dispatch]);
   
   return (
     <>

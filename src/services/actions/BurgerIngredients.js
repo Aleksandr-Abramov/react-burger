@@ -1,3 +1,3 @@
-import { GET_INGRIDIENTS_REQUEST } from "../reducers/BurgerIngredientsReducer"
+import { GET_INGRIDIENTS_SUCCESS } from "../reducers/BurgerIngredientsReducer"
 
-export const getIngredients = (payload) => ({ type: GET_INGRIDIENTS_REQUEST, payload }) 
+export const getIngredients = (payload) => ({ type: GET_INGRIDIENTS_SUCCESS, payload }) 

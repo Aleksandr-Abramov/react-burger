@@ -3,6 +3,7 @@ import { BASE_URL } from "../../utils/api";
 import {
   GET_INGRIDIENTS_SUCCESS,
   GET_INGRIDIENTS_ERRORE,
+  GET_INGRIDIENTS_REQUEST
 } from "../reducers/BurgerIngredientsReducer";
 import { setOrderData } from "./OrderDetails.Reducer";
 import { getIngredients } from "./BurgerIngredients";
@@ -29,24 +30,29 @@ export const fetchOrderPost = (ingredientsList) => {
 export const fetchIngredients = () => {
   return function (dispatch) {
     dispatch({
-      type: GET_INGRIDIENTS_SUCCESS,
+      type: GET_INGRIDIENTS_REQUEST,
       payload: true,
-    });
+    })
     fetch(`${BASE_URL}/ingredients`)
-      .then(checkResponse)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } 
+        return Promise.reject(res);
+      })
       .then((json) => {
-        dispatch(getIngredients(json.data));
         dispatch({
           type: GET_INGRIDIENTS_SUCCESS,
-          payload: false,
+          payload: json.data,
         });
+ 
       })
       .catch((err) => {
         console.log(err);
         dispatch({
           type: GET_INGRIDIENTS_ERRORE,
-          payload: `ошибка на сервере ${err}`,
-        });
+          payload: `Произошла ошибка при получении данных: ${err.status}`,
+        })
       });
   };
 };

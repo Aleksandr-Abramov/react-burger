@@ -4,18 +4,18 @@ export const GET_INGRIDIENTS_SUCCESS = "GET_INGRIDIENTS_SUCCESS";
 
 const initialState = {
   ingredients: [],
-  isLoading: false,
-  message: "",
+  isLoading: null,
+  error: null,
 };
 
 export const BurgerIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGRIDIENTS_REQUEST:
-      return { ...state, ingredients: action.payload };
+      return { ...state, isLoading: action.payload, error: null};
     case GET_INGRIDIENTS_SUCCESS:
-      return { ...state, isLoading: action.payload };
+      return { ...state, isLoading: false, ingredients: action.payload };
     case GET_INGRIDIENTS_ERRORE:
-      return { ...state, message: action.payload };
+      return { ...state, isLoading: false, error: action.payload  };
     default:
       return state;
   }
