@@ -5,8 +5,11 @@ import { useParams } from "react-router";
 
 const IngredientDetails = ({ingredientsData}) => {
   const params = useParams();
-  const data = ingredientsData.filter((item) => item._id === params.ingredientId)[0];
+  const data = ingredientsData.find((item) => item._id === params.ingredientId);
 
+  if (!data) {
+    return "Загрузка..."
+  }
 
   return (
     <div className={styles.container}>
