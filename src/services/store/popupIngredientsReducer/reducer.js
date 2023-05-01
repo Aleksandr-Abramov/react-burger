@@ -22,7 +22,3 @@ export const popupIngredientsReducer = (state = initialState, action) => {
             return state;
     }
 }
-// export const openIngredientPopup = () => ({type: OPEN_INGREDIENTS_POPUP}) 
-// export const closeIngredientPopup = () => ({type: CLOSE_INGREDIENTS_POPUP}) 
-// export const toggleIngredientPopup = () => ({type: TOGGLE_INGREDIENTS_POPUP}) 
-// export const isOpenCloseIngredientPopup = () => ({type: IS_OPEN_CLOSE_INGREDIENTS_POPUP}) 

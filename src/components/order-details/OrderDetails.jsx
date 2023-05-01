@@ -2,9 +2,10 @@ import React from "react";
 import styles from "./order-details.module.css";
 import popupIcon from "../../images/popup-acces-icon.svg";
 import { useSelector } from "react-redux";
+import { getOrderNumbers } from "../../services/store/OrderDetailsReducer/selectors";
 
 const OrderDetails = () => {
-  const orderNumber = useSelector((state) => state.OrderDetails.order);
+  const orderNumber = useSelector(getOrderNumbers);
   return (
     <div className={styles.container}>
       <h3 className="text text_type_digits-large mb-8 mt-30">

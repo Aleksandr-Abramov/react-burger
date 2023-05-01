@@ -6,22 +6,18 @@ import BurgerIngredientTitle from "../burger-ingredient-title/BurgerIngredientTi
 //import PropTypes from "prop-types";
 //import { ingridientPropType } from "../../utils/propType";
 import { useSelector } from "react-redux";
+import { getIngridients } from "../../services/store/BurgerIngredientsReducer/selectors";
+import {
+  getBurgerConstructorList,
+  getBurgerConsructorBun,
+} from "../../services/store/BurgerConstructorReducer/selectors";
 import { useInView } from "react-intersection-observer";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("bun");
-
-  const ingredients = useSelector(
-    (state) => state.BurgerIngredientsReducer.ingredients
-  );
-
-  const BurgerConstructorList = useSelector(
-    (state) => state.BurgerConstructorReducer.ingredients
-  );
-
-  const BurgerConstructorBun = useSelector(
-    (state) => state.BurgerConstructorReducer.bun
-  );
+  const ingredients = useSelector(getIngridients);
+  const BurgerConstructorList = useSelector(getBurgerConstructorList);
+  const BurgerConstructorBun = useSelector(getBurgerConsructorBun);
 
   const [bunsRef, inViewBuns, bunElement] = useInView({
     threshold: 0,

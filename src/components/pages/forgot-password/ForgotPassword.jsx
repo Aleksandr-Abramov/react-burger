@@ -10,7 +10,6 @@ import { useState } from "react";
 const ForgotPassword = () => {
   const [value, setValue] = useState({
     email: "",
-    password: "",
   });
   const handlerChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });

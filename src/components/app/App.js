@@ -12,17 +12,20 @@ import Orders from "../pages/orders/Orders";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchIngredients } from "../../services/actions/asyncActions";
+import { fetchIngredients } from "../../services/store/asyncActions";
+import { clearIngredient } from "../../services/store/IngredientDetailsReducer/actions";
+import {
+  getIngridients,
+  getIsLoading,
+  getIngredientsError,
+} from "../../services/store/BurgerIngredientsReducer/selectors";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoading, error } = useSelector(
-    (state) => state.BurgerIngredientsReducer
-  );
-  const dasda = useSelector(
-    (state) => state.BurgerIngredientsReducer.ingredients
-  );
+  const error = useSelector(getIngredientsError);
+  const isLoading = useSelector(getIsLoading);
+  const dasda = useSelector(getIngridients);
 
   const dispatch = useDispatch();
 
@@ -39,6 +42,7 @@ function App() {
       e.key === "Escape"
     ) {
       navigate("/");
+      dispatch(clearIngredient());
     }
   };
   if (isLoading) {

@@ -4,9 +4,8 @@ import {
   GET_INGRIDIENTS_SUCCESS,
   GET_INGRIDIENTS_ERRORE,
   GET_INGRIDIENTS_REQUEST
-} from "../reducers/BurgerIngredientsReducer";
-import { setOrderData } from "./OrderDetails.Reducer";
-import { getIngredients } from "./BurgerIngredients";
+} from "./BurgerIngredientsReducer/reducer";
+import { setOrderData } from "../store/OrderDetailsReducer/actions";
 
 export const fetchOrderPost = (ingredientsList) => {
   return function (dispatch) {

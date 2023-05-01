@@ -1,4 +1,4 @@
-import * as CONST from "../reducers/popupOrderReducer";
+import * as CONST from "./reducer";
 
 export const openOrderPopup = () => ({type: CONST.OPEN_ORDER_POPUP})
 export const closeOrderPopup = () => ({type: CONST.CLOSE_ORDER_POPUP})

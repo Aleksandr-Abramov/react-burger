@@ -9,11 +9,8 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import { setIngredient } from "../../services/actions/IngredientDetails";
-import {
-  draggingOff,
-  draggingOn,
-} from "../../services/actions/BurgerConstructorReducer";
+import { setIngredient } from "../../services/store/IngredientDetailsReducer/actions";
+import { draggingOff, draggingOn} from "../../services/store/BurgerConstructorReducer/actions";
 
 const BurgerIngredient = ({ item, count }) => {
   const dispatch = useDispatch();

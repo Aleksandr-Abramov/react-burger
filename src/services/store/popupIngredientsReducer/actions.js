@@ -1,4 +1,4 @@
-import * as CONST from '../reducers/popupIngredientsReducer';
+import * as CONST from './reducer';
 
 export const openIngredientPopup = () => ({ type: CONST.OPEN_INGREDIENTS_POPUP });
 export const closeIngredientPopup = () => ({ type: CONST.CLOSE_INGREDIENTS_POPUP });

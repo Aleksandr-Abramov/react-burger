@@ -1,14 +1,13 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-// import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
-const IngredientDetails = ({ingredientsData}) => {
+const IngredientDetails = ({ ingredientsData }) => {
   const params = useParams();
   const data = ingredientsData.find((item) => item._id === params.ingredientId);
 
   if (!data) {
-    return "Загрузка..."
+    return "Загрузка...";
   }
 
   return (

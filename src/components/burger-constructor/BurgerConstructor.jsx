@@ -4,48 +4,50 @@ import image from "../../images/price.svg";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import { useSelector, useDispatch } from "react-redux";
-import { openOrderPopup } from "../../services/actions/popupOrderRecucer";
+import { openOrderPopup } from "../../services/store/popupOrderRecucer/actions";
 import { useDrop } from "react-dnd";
-import { closeIngredientPopup } from "../../services/actions/popupIngredientsReducer";
-import { closeOrderPopup } from "../../services/actions/popupOrderRecucer";
-import { clearIngredient } from "../../services/actions/IngredientDetails";
-import { fetchOrderPost } from "../../services/actions/asyncActions";
-
+import { closeIngredientPopup } from "../../services/store/popupIngredientsReducer/actions";
+import { closeOrderPopup } from "../../services/store/popupOrderRecucer/actions";
+import { clearIngredient } from "../../services/store/IngredientDetailsReducer/actions";
+import { fetchOrderPost } from "../../services/store/asyncActions";
 import {
   addIngredientConstuctor,
   addBunIngredientConstuctor,
-} from "../../services/actions/BurgerConstructorReducer";
+} from "../../services/store/BurgerConstructorReducer/actions";
 import BurgerConstructorPlaceholder from "../burger-constructor-placeholder/BurgerConstructorPlaceholder";
 import DragCard from "./drag-card/DragCard";
-
+import { getIsOpenCloseOrderPopup } from "../../services/store/popupOrderRecucer/selectors";
+import {
+  getBurgerConsructorBun,
+  getBurgerConstructorList,
+  elementIsDrag,
+} from "../../services/store/BurgerConstructorReducer/selectors";
 import {
   ConstructorElement,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerConstructor = () => {
-  const isOpenCloseOrderPopup = useSelector(
-    (state) => state.popupOrderReducer.isOpenCloseOrder
-  );
-  const BurgerConstructorList = useSelector(
-    (state) => state.BurgerConstructorReducer.ingredients
-  );
-  const BurgerConsructorBun = useSelector(
-    (state) => state.BurgerConstructorReducer.bun
-  );
-  const elementDrag = useSelector(
-    (state) => state.BurgerConstructorReducer.isDrag
-  );
+  const isOpenCloseOrderPopup = useSelector(getIsOpenCloseOrderPopup);
+
+  const BurgerConstructorList = useSelector(getBurgerConstructorList);
+  const BurgerConsructorBun = useSelector(getBurgerConsructorBun);
+  const elementDrag = useSelector(elementIsDrag);
+
   const borderColor = elementDrag ? "#4c4cff" : "#000";
 
   const dispatch = useDispatch();
 
   const handelPost = () => {
     let ingredientsIdList = BurgerConstructorList.map((item) => item._id);
-    if(BurgerConsructorBun) {
-      ingredientsIdList = [BurgerConsructorBun._id,...ingredientsIdList,BurgerConsructorBun._id]
+    if (BurgerConsructorBun) {
+      ingredientsIdList = [
+        BurgerConsructorBun._id,
+        ...ingredientsIdList,
+        BurgerConsructorBun._id,
+      ];
     } else {
-      ingredientsIdList = [...ingredientsIdList]
+      ingredientsIdList = [...ingredientsIdList];
     }
     dispatch(fetchOrderPost(ingredientsIdList));
   };

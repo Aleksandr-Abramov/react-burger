@@ -5,7 +5,6 @@ import {
   Logo,
   BurgerIcon,
   ProfileIcon,
-  ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const activeClass = `${styles.menuLink} ${styles.menuLinkActive} text text_type_main-default`;
@@ -79,44 +78,4 @@ const Header = () => {
     </header>
   );
 };
-{
-  /* <ul className={styles.menu}>
-<li className={`${styles.menuItem}`}>
-  <NavLink to="/" className={styles.menuLink}>
-    <BurgerIcon type="primery" />
-    <span
-      style={{ color: "white" }}
-      className={`text text_type_main-default pl-2`}
-    >
-      Конструктор
-    </span>
-  </NavLink>
-</li>
-<li className={`${styles.menuItem}`}>
-  <NavLink to="/" className={styles.menuLink}>
-    <ListIcon type="secondary" />
-    <span
-      className={`text text_type_main-default text_color_inactive pl-2`}
-    >
-      Лента заказов
-    </span>
-  </NavLink>
-</li>
-<li className={`${styles.menuItem} ${styles.Logo}`}>
-  <NavLink to="/" className={styles.menuLink}>
-    <Logo />
-  </NavLink>
-</li>
-<li className={`${styles.menuItem}`}>
-  <NavLink to="/profile" className={styles.menuLink}>
-    <ProfileIcon type="secondary" />
-    <span
-      className={`text text_type_main-default text_color_inactive pl-2`}
-    >
-      Личный кабинет
-    </span>
-  </NavLink>
-</li>
-</ul> */
-}
 export default Header;
