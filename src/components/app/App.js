@@ -19,6 +19,7 @@ import {
   getIsLoading,
   getIngredientsError,
 } from "../../services/store/BurgerIngredientsReducer/selectors";
+import { ProfileForm } from "../profile-form/ProfileForm";
 
 function App() {
   const location = useLocation();
@@ -62,7 +63,10 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<Profile />} >
+            <Route index element={<ProfileForm />} />
+            <Route path="orders" element={<Orders />} />
+          </Route>
           <Route path="order" element={<Orders />} />
           <Route
             path="/ingredients/:ingredientId"
