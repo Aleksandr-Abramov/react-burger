@@ -6,18 +6,19 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { resetPassword } from "../../../utils/api";
 
 const ResetPassword = () => {
   const [value, setValue] = useState({
-    newPassword: "",
-    emailText: "",
+    password: "",
+    token: "",
   });
   const handlerChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
+    resetPassword(value);
   };
 
   return (
@@ -32,18 +33,18 @@ const ResetPassword = () => {
         placeholder="Введите новый пароль"
         icon={"ShowIcon"}
         extraClass="mb-6"
-        value={value.newPassword}
+        value={value.password}
         type="text"
-        name="newPassword"
+        name="password"
         onChange={handlerChange}
       />
 
       <Input
         placeholder="Введите код из письма"
         extraClass="mb-6"
-        value={value.emailText}
+        value={value.token}
         type="text"
-        name="emailText"
+        name="token"
         onChange={handlerChange}
       />
 

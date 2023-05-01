@@ -6,6 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { forgotPassword } from "../../../utils/api";
 
 const ForgotPassword = () => {
   const [value, setValue] = useState({
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
+    forgotPassword(value);
   };
 
   return (
@@ -33,6 +34,7 @@ const ForgotPassword = () => {
         name="email"
         value={value.email}
         onChange={handlerChange}
+        required
       />
 
       <Button htmlType="submit" extraClass={styles.button}>

@@ -7,6 +7,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { registerUser } from "../../../utils/api";
 
 const Register = () => {
   const [value, setValue] = useState({
@@ -19,7 +20,7 @@ const Register = () => {
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
+    registerUser(value);
   };
   return (
     <form
