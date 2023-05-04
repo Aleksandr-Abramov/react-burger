@@ -7,7 +7,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { registerUser } from "../../../utils/api";
+import { registerUser } from "../../../services/store/asyncActions";
 
 const Register = () => {
   const [value, setValue] = useState({

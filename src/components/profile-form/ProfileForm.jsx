@@ -6,10 +6,13 @@ import {
     Button,
   } from "@ya.praktikum/react-developer-burger-ui-components";
   import { useState } from "react";
+import { changeUserData } from "../../services/store/asyncActions";
+import { useDispatch, useSelector } from "react-redux";
+import { oldUserData } from "../../services/store/authReducer/selectors";
 
 export const ProfileForm = () => {
-
-
+    const dispatch = useDispatch()
+    const returnOldUserData = useSelector(oldUserData);
     const [value, setValue] = useState({
         name: "",
         email: "",
@@ -20,8 +23,12 @@ export const ProfileForm = () => {
       };
       const handlerSubmit = (e) => {
         e.preventDefault();
-        console.log(value);
+        dispatch(changeUserData(value))
       };
+
+      const handlerOldData = () => {
+        dispatch(changeUserData(returnOldUserData))
+      }
   return (
     <form
       action="/"
@@ -61,6 +68,7 @@ export const ProfileForm = () => {
         <Button
           htmlType="button"
           className={`text text_type_main-default text_color_inactive ${styles.button2} mr-5`}
+          onClick={handlerOldData}
         >
           Отмена
         </Button>

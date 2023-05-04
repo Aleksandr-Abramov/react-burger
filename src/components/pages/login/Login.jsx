@@ -7,8 +7,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import { authorizationUser, getUserData } from "../../../services/store/asyncActions";
+import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { refreshToken } from "../../../utils/api";
 const Login = () => {
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [value, setValue] = useState({
     email: "",
     password: "",
@@ -18,9 +24,14 @@ const Login = () => {
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
+    dispatch(authorizationUser(value));
+    navigate(location.state.from.pathname)
+    console.log(location.state.from.pathname);
   };
   return (
+    <>
+    <button onClick={() => refreshToken()}>refreshToken</button>
+    <button onClick={() => getUserData()}>fetchWithRefresh</button>
     <form
       action="/"
       method="post"
@@ -60,6 +71,7 @@ const Login = () => {
         </Link>
       </span>
     </form>
+    </>
   );
 };
 

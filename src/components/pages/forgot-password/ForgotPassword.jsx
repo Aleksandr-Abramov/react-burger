@@ -7,8 +7,10 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { forgotPassword } from "../../../utils/api";
-
+import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
+  const navigate = useNavigate()
+
   const [value, setValue] = useState({
     email: "",
   });
@@ -17,7 +19,14 @@ const ForgotPassword = () => {
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    forgotPassword(value);
+    forgotPassword(value)
+    .then((result) => {
+      console.log(result)
+      navigate("/reset-password")
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   return (

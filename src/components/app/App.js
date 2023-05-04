@@ -20,6 +20,11 @@ import {
   getIngredientsError,
 } from "../../services/store/BurgerIngredientsReducer/selectors";
 import { ProfileForm } from "../profile-form/ProfileForm";
+import { isUserChecked } from "../../services/store/authReducer/actions";
+import { fetchWithRefresh } from "../../services/store/asyncActions";
+import ProtectedRouteElement from "../protected-route-element/ProtectedRouteElement";
+
+
 
 function App() {
   const location = useLocation();
@@ -31,6 +36,12 @@ function App() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    if(localStorage.getItem("accessToken")) {
+      dispatch(isUserChecked(true));
+      dispatch(fetchWithRefresh())
+    } else {
+      dispatch(isUserChecked(false));
+    }
     dispatch(fetchIngredients());
   }, [dispatch]);
 
@@ -58,22 +69,32 @@ function App() {
     <>
       <Routes location={background || location}>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="reset-password" element={<ResetPassword />} />
-          <Route path="profile" element={<Profile />} >
+          <Route index element={<ProtectedRouteElement element={<Home />}/>}/>
+          <Route path="login" element={<ProtectedRouteElement element={<Login />}/>}/>
+          <Route path="register" element={<ProtectedRouteElement element={<Register />}/>}/>
+          <Route path="forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />}/>}/>
+          <Route path="reset-password" element={<ProtectedRouteElement element={<ResetPassword/>}/>}/>
+          <Route path="/profile" element={<ProtectedRouteElement onlyAuthorizedUsers={true} element={<Profile />}/>}>
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<Orders />} />
           </Route>
-          <Route path="order" element={<Orders />} />
+          <Route path="order" element={<ProtectedRouteElement element={<Orders />}/>}/>
           <Route
             path="/ingredients/:ingredientId"
             element={<IngredientDetails ingredientsData={dasda} />}
           />
         </Route>
       </Routes>
+      {/* <Route index element={<Home />} /> */}
+      {/* <Route path="login" element={<Login />} /> */}
+      {/* <Route path="register" element={<Register />} /> */}
+      {/* <Route path="forgot-password" element={<ForgotPassword />} /> */}
+      {/* <Route path="reset-password" element={<ResetPassword />} /> */}
+      {/* <Route path="profile" element={<Profile />} >
+        <Route index element={<ProfileForm />} />
+        <Route path="orders" element={<Orders />} />
+      </Route> */}
+      {/* <Route path="order" element={<Orders />} /> */}
 
       {background && (
         <Routes>
@@ -88,6 +109,7 @@ function App() {
         </Routes>
       )}
     </>
+
   );
 }
 
