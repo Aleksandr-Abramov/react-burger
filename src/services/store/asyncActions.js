@@ -75,12 +75,11 @@ export const authorizationUser = (loginUserData) => (dispatch) => {
         type: USER_LOGIN_AUTHORIZATION,
         payload: res.user,
       });
-      dispatch(isUserChecked(true))
+      dispatch(isUserChecked(true));
       dispatch(userAuthentificated(true));
-      console.log(res);
     })
     .catch((err) => {
-      dispatch(isUserChecked(false))
+      dispatch(isUserChecked(false));
       dispatch(userAuthentificated(false));
       console.log(err);
     });
@@ -107,12 +106,12 @@ export const registerUser = (registerUserData) => (dispatch) => {
         type: USER_LOGIN_AUTHORIZATION,
         payload: res.user,
       });
-      dispatch(isUserChecked(true))
+      dispatch(isUserChecked(true));
       dispatch(userAuthentificated(true));
       console.log(res);
     })
     .catch((err) => {
-      dispatch(isUserChecked(false))
+      dispatch(isUserChecked(false));
       dispatch(userAuthentificated(false));
       console.log(err);
     });
@@ -131,7 +130,6 @@ export const logoutUser = () => (dispatch) => {
   })
     .then(checkResponse)
     .then((res) => {
-      console.log(res);
       localStorage.clear();
       dispatch({
         type: LOGOUT_USER,
@@ -150,21 +148,18 @@ export const getUserData = () => {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
   }).then(checkResponse);
-  // .then((res) => console.log(res))
-  // .catch((err) => console.log(err.message));
 };
 export const fetchWithRefresh = () => (dispatch) => {
   getUserData()
     .then((res) => {
       if (res.success) {
-        console.log(res);
         dispatch({
           type: USER_LOGIN_AUTHORIZATION,
           payload: res.user,
         });
         dispatch(userAuthentificated(true));
       } else {
-        dispatch(isUserChecked(false))
+        dispatch(isUserChecked(false));
         dispatch(userAuthentificated(false));
       }
     })
@@ -191,49 +186,17 @@ export const refreshToken = () => (dispatch) => {
   })
     .then(checkResponse)
     .then((res) => {
-      console.log(res);
       localStorage.setItem(
         "accessToken",
         res.accessToken.replace("Bearer ", "") || ""
       );
       localStorage.setItem("refreshToken", res.refreshToken);
-      dispatch(userAuthentificated(true))
+      dispatch(userAuthentificated(true));
     })
     .catch((err) => {
-      dispatch(userAuthentificated(false))
-      console.log(err);
+      dispatch(userAuthentificated(false));
     });
 };
-// export const fetchWithRefresh = async (url, options) => {
-//   try {
-//     const res = await fetch(url, options);
-//     console.log(res);
-//     return await checkResponse(res);
-//   } catch (err) {
-//     if (err.message === "jwt expired") {
-//       const refreshData = await refreshToken(); //обновляем токен
-//       if (!refreshData.success) {
-//         return Promise.reject(refreshData);
-//       }
-//       localStorage.setItem("refreshToken", refreshData.refreshToken);
-//       localStorage.setItem("accessToken", refreshData.accessToken);
-//       options.headers.authorization = refreshData.accessToken;
-//       const res = await fetch(url, options); //повторяем запрос
-//       return await checkResponse(res);
-//     } else {
-//       return Promise.reject(err);
-//     }
-//   }
-// };
-// https://norma.nomoreparties.space/api/auth/user
-
-// fetchWithRefresh("https://norma.nomoreparties.space/api/auth/user", {
-//   method: "GET",
-//   headers: {
-//     "Content-Type": "application/json;charset=utf-8",
-//     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-//   },
-// })
 /**
  * Изменить данные пользователя
  */

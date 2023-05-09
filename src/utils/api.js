@@ -4,7 +4,6 @@ export const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export const checkResponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-  // return res.ok ? res.json() : Promise.reject(res);
 };
 
 export const getIngredientsData = () => {
@@ -55,10 +54,6 @@ export const resetPassword = (resetPsswordData) => {
     body: JSON.stringify(resetPsswordData),
   })
     .then(checkResponse)
-    .then((result) => console.log(result))
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 /**

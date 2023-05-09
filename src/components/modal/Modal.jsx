@@ -36,6 +36,7 @@ const Modal = ({ children, handlerModelClose }) => {
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
+  handlerModelClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

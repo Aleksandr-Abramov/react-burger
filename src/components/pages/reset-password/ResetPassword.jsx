@@ -7,18 +7,28 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { resetPassword } from "../../../utils/api";
+import { useDispatch } from "react-redux";
+import { changeResetPassword } from "../../../services/store/authReducer/actions";
 
 const ResetPassword = () => {
   const [value, setValue] = useState({
     password: "",
     token: "",
   });
+  const dispatch = useDispatch();
   const handlerChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    resetPassword(value);
+    resetPassword(value)
+      .then((result) => {
+        console.log(result);
+        dispatch(changeResetPassword(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

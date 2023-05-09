@@ -1,25 +1,20 @@
 import React from "react";
-import { useLocation, useNavigate, Navigate } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import {
-  isUserAuthentificated,
   userData,
-  isAuthChecked,
+  isResetPassword,
 } from "../../services/store/authReducer/selectors";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-const ProtectedRouteElement = ({ element, onlyAuthorizedUsers = false }) => {
+
+const ProtectedRouteElement = ({ element }) => {
   const user = useSelector(userData);
-  const isAuthentificated = useSelector(isUserAuthentificated);
-  const AuthChecked = useSelector(isAuthChecked);
+  const isResetPass = useSelector(isResetPassword);
   const location = useLocation();
-  const navigate = useNavigate();
 
-
-  if (
-    (!user && location.pathname === "/profile") ||
-    (!user && location.pathname === "/profile/orders")
-  ) {
-    return <Navigate to="/login" state={{ from: location }}/>;
+  if (!user && location.pathname === "/reset-password" && !isResetPass) {
+    return <Navigate to="/" state={{ from: location }} />;
   }
 
   if (
@@ -28,17 +23,22 @@ const ProtectedRouteElement = ({ element, onlyAuthorizedUsers = false }) => {
     (user && location.pathname === "/forgot-password") ||
     (user && location.pathname === "/reset-password")
   ) {
-    return <Navigate to="/" />;
+    const { from } = location.state || { from: { pathname: "/" } };
+    return <Navigate to={from} state={{ from: location }} />;
   }
 
-  // if(!onlyAuthorizedUsers && user) {
-  //     return <Navigate to="/"/>
-  // }
-  // if(onlyAuthorizedUsers) {
-  //     return <Navigate to="/login"/>
-  // }
+  if (
+    (!user && location.pathname === "/profile") ||
+    (!user && location.pathname === "/profile/orders")
+  ) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
 
   return element;
 };
+
+ProtectedRouteElement.propTypes = {
+  element: PropTypes.element,
+}
 
 export default ProtectedRouteElement;

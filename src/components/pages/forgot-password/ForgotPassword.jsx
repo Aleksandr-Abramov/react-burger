@@ -8,9 +8,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { forgotPassword } from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
-const ForgotPassword = () => {
-  const navigate = useNavigate()
+import { useDispatch } from "react-redux";
+import { changeResetPassword } from "../../../services/store/authReducer/actions";
 
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [value, setValue] = useState({
     email: "",
   });
@@ -20,13 +23,13 @@ const ForgotPassword = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     forgotPassword(value)
-    .then((result) => {
-      console.log(result)
-      navigate("/reset-password")
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((result) => {
+        navigate("/reset-password");
+        dispatch(changeResetPassword(true));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

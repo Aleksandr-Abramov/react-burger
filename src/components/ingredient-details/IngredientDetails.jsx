@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
 import { useParams } from "react-router";
+import PropTypes from "prop-types";
 
 const IngredientDetails = ({ ingredientsData }) => {
   const params = useParams();
@@ -53,6 +54,10 @@ const IngredientDetails = ({ ingredientsData }) => {
       </div>
     </div>
   );
+};
+
+IngredientDetails.propTypes = {
+  ingredientsData: PropTypes.object.isRequired,
 };
 
 export default IngredientDetails;
