@@ -8,10 +8,11 @@ import {
   import { useState } from "react";
 import { changeUserData } from "../../services/store/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
-import { oldUserData } from "../../services/store/authReducer/selectors";
+import { oldUserData, userData } from "../../services/store/authReducer/selectors";
 
 export const ProfileForm = () => {
     const dispatch = useDispatch()
+    const userDataAuth = useSelector(userData);
     const returnOldUserData = useSelector(oldUserData);
     const [value, setValue] = useState({
         name: "",
@@ -37,7 +38,7 @@ export const ProfileForm = () => {
       onSubmit={handlerSubmit}
     >
       <Input
-        placeholder="Имя"
+        placeholder={userDataAuth ? userDataAuth.name : "Имя"}
         icon={"EditIcon"}
         extraClass="mb-6"
         value={value.name}
@@ -47,7 +48,7 @@ export const ProfileForm = () => {
       />
 
       <EmailInput
-        placeholder="Логон"
+        placeholder={userDataAuth ? userDataAuth.email : "Логон"}
         icon={"EditIcon"}
         extraClass="mb-6"
         name="email"

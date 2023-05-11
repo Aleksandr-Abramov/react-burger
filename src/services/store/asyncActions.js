@@ -197,6 +197,19 @@ export const refreshToken = () => (dispatch) => {
       dispatch(userAuthentificated(false));
     });
 };
+
+export const requestRefreshToken = () => (dispatch) => {
+  fetch(`${BASE_URL}/auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken"),
+    }),
+  })
+    .then(checkResponse)
+};
 /**
  * Изменить данные пользователя
  */
@@ -211,6 +224,7 @@ export const changeUserData = (newUserData) => (dispatch) => {
   })
     .then(checkResponse)
     .then((res) => {
+      dispatch(refreshToken());
       dispatch({
         type: CHANGE_USER_DATA,
         payload: res.user,
@@ -218,6 +232,8 @@ export const changeUserData = (newUserData) => (dispatch) => {
       console.log(res);
     })
     .catch((err) => {
+      dispatch(refreshToken());
+      dispatch(changeUserData());
       console.log(err);
     });
 };

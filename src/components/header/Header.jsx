@@ -6,11 +6,15 @@ import {
   BurgerIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { userData } from "../../services/store/authReducer/selectors";
+import { useSelector } from "react-redux";
 
 const activeClass = `${styles.menuLink} ${styles.menuLinkActive} text text_type_main-default`;
 const unActiveClass = `${styles.menuLink} text text_type_main-default text_color_inactive`;
 
 const Header = () => {
+  const isUserAuth = useSelector(userData);
+ 
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
@@ -66,7 +70,7 @@ const Header = () => {
                   return (
                     <>
                       <ProfileIcon type={isActive ? "primery" : "secondary"} />
-                      <span className={`pl-2`}>Личный кабинет</span>
+                      <span className={`pl-2`}>{isUserAuth ? isUserAuth.name : "Личный кабинет"}</span>
                     </>
                   );
                 }}

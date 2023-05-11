@@ -57,7 +57,7 @@ const IngredientDetails = ({ ingredientsData }) => {
 };
 
 IngredientDetails.propTypes = {
-  ingredientsData: PropTypes.object.isRequired,
+  ingredientsData: PropTypes.array.isRequired,
 };
 
 export default IngredientDetails;

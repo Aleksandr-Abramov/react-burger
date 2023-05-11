@@ -8,8 +8,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { registerUser } from "../../../services/store/asyncActions";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState({
     email: "",
     password: "",
@@ -20,7 +22,7 @@ const Register = () => {
   };
   const handlerSubmit = (e) => {
     e.preventDefault();
-    registerUser(value);
+    dispatch(registerUser(value));
   };
   return (
     <form
@@ -31,7 +33,7 @@ const Register = () => {
     >
       <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
       <Input
-        placeholder="Пароль"
+        placeholder="Имя"
         extraClass="mb-6"
         value={value.name}
         type="text"

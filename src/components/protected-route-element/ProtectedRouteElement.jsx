@@ -6,7 +6,12 @@ import {
 } from "../../services/store/authReducer/selectors";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-
+export const LOGIN = "/login"
+export const REGISTER = "/register"
+export const FORGOT_PASSWORD = "/forgot-password"
+export const RESET_PASSWORD = "/reset-password"
+export const PROFILE = "/profile"
+export const PROFILE_ORDERS = "/profile/orders"
 
 const ProtectedRouteElement = ({ element }) => {
   const user = useSelector(userData);
@@ -18,18 +23,18 @@ const ProtectedRouteElement = ({ element }) => {
   }
 
   if (
-    (user && location.pathname === "/login") ||
-    (user && location.pathname === "/register") ||
-    (user && location.pathname === "/forgot-password") ||
-    (user && location.pathname === "/reset-password")
+    (user && location.pathname === LOGIN) ||
+    (user && location.pathname === REGISTER) ||
+    (user && location.pathname === FORGOT_PASSWORD) ||
+    (user && location.pathname === RESET_PASSWORD)
   ) {
     const { from } = location.state || { from: { pathname: "/" } };
     return <Navigate to={from} state={{ from: location }} />;
   }
 
   if (
-    (!user && location.pathname === "/profile") ||
-    (!user && location.pathname === "/profile/orders")
+    (!user && location.pathname === PROFILE) ||
+    (!user && location.pathname === PROFILE_ORDERS)
   ) {
     return <Navigate to="/login" state={{ from: location }} />;
   }

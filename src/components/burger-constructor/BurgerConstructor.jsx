@@ -26,10 +26,11 @@ import {
   ConstructorElement,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { userData } from "../../services/store/authReducer/selectors";
 
 const BurgerConstructor = () => {
   const isOpenCloseOrderPopup = useSelector(getIsOpenCloseOrderPopup);
-
+  const isUserAuth = useSelector(userData); 
   const BurgerConstructorList = useSelector(getBurgerConstructorList);
   const BurgerConsructorBun = useSelector(getBurgerConsructorBun);
   const elementDrag = useSelector(elementIsDrag);
@@ -171,7 +172,7 @@ const BurgerConstructor = () => {
           size="large"
           onClick={handlerModelOpen}
           disabled={
-            BurgerConstructorList.length !== 0 && BurgerConsructorBun !== null
+            isUserAuth && BurgerConstructorList.length !== 0 && BurgerConsructorBun !== null
               ? false
               : true
           }
