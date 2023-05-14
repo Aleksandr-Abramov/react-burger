@@ -1,5 +1,3 @@
-
-
 export const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export const checkResponse = (res) => {
@@ -9,26 +7,23 @@ export const checkResponse = (res) => {
 export const getIngredientsData = () => {
   return fetch(`${BASE_URL}/ingredients`).then(checkResponse);
 };
-// /**
-//  * Регистрация
-//  */
-// export const registerUser = (registerUserData) => {
-//   return fetch(`${BASE_URL}/auth/register`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(registerUserData),
-//   })
-//     .then(checkResponse)
-//     .then((res) => console.log(res))
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 
+export const GET_HEADERS = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json;charset=utf-8",
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  },
+}
 
-
+export const PATCH_HEADERS =  {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json;charset=utf-8",
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  },
+  // body: JSON.stringify(value),
+}
 /**
  * Восстановление пароля
  */
@@ -52,15 +47,14 @@ export const resetPassword = (resetPsswordData) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(resetPsswordData),
-  })
-    .then(checkResponse)
+  }).then(checkResponse);
 };
 
 /**
  * Обновить accessToken
  */
-export const refreshToken = () => {
-  fetch(`${BASE_URL}/auth/token`, {
+export const requestRefreshToken = () => {
+  return fetch(`${BASE_URL}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -68,17 +62,29 @@ export const refreshToken = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  })
-    .then(checkResponse)
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem(
-        "accessToken",
-        res.accessToken.replace("Bearer ", "") || ""
-      );
-      localStorage.setItem("refreshToken", res.refreshToken);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then(checkResponse);
+};
+/**
+ * Получить/изменить данные о пользователе.
+ */
+export const fetchWithRefresh = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    return checkResponse(res);
+  } catch (err) {
+    if (err.message === "jwt expired") {
+      const refreshData = await requestRefreshToken();
+
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      localStorage.setItem("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options);
+      return await checkResponse(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
 };

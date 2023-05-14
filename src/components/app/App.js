@@ -21,22 +21,27 @@ import {
 } from "../../services/store/BurgerIngredientsReducer/selectors";
 import { ProfileForm } from "../profile-form/ProfileForm";
 import { isUserChecked } from "../../services/store/authReducer/actions";
-import { fetchWithRefresh } from "../../services/store/asyncActions";
 import ProtectedRouteElement from "../protected-route-element/ProtectedRouteElement";
+import { BASE_URL, fetchWithRefresh, GET_HEADERS } from "../../utils/api";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const error = useSelector(getIngredientsError);
   const isLoading = useSelector(getIsLoading);
-  const dasda = useSelector(getIngridients);
+  const ingredientsData = useSelector(getIngridients);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(isUserChecked(true));
-      dispatch(fetchWithRefresh());
+      fetchWithRefresh(
+        `${BASE_URL}/auth/user`,
+        GET_HEADERS
+      )
+      // .then((res) => console.log(res))
+      .catch((res) => console.log(res));
     } else {
       dispatch(isUserChecked(false));
     }
@@ -102,7 +107,7 @@ function App() {
           />
           <Route
             path="/ingredients/:ingredientId"
-            element={<IngredientDetails ingredientsData={dasda} />}
+            element={<IngredientDetails ingredientsData={ingredientsData} />}
           />
         </Route>
       </Routes>
@@ -113,7 +118,7 @@ function App() {
             path="/ingredients/:ingredientId"
             element={
               <Modal handlerModelClose={handlerModelClose}>
-                <IngredientDetails ingredientsData={dasda} />
+                <IngredientDetails ingredientsData={ingredientsData} />
               </Modal>
             }
           />

@@ -1,35 +1,64 @@
 import React from "react";
 import styles from "./profile-form.module.css";
 import {
-    EmailInput,
-    Input,
-    Button,
-  } from "@ya.praktikum/react-developer-burger-ui-components";
-  import { useState } from "react";
-import { changeUserData } from "../../services/store/asyncActions";
+  EmailInput,
+  Input,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { oldUserData, userData } from "../../services/store/authReducer/selectors";
+import {
+  oldUserData,
+  userData,
+} from "../../services/store/authReducer/selectors";
+import { BASE_URL, fetchWithRefresh, PATCH_HEADERS } from "../../utils/api";
+import { CHANGE_USER_DATA } from "../../services/store/authReducer/reducer";
 
 export const ProfileForm = () => {
-    const dispatch = useDispatch()
-    const userDataAuth = useSelector(userData);
-    const returnOldUserData = useSelector(oldUserData);
-    const [value, setValue] = useState({
-        name: "",
-        email: "",
-        password: "",
-      });
-      const handlerChange = (e) => {
-        setValue({ ...value, [e.target.name]: e.target.value });
-      };
-      const handlerSubmit = (e) => {
-        e.preventDefault();
-        dispatch(changeUserData(value))
-      };
-
-      const handlerOldData = () => {
-        dispatch(changeUserData(returnOldUserData))
-      }
+  const dispatch = useDispatch();
+  const userDataAuth = useSelector(userData);
+  const returnOldUserData = useSelector(oldUserData);
+  const [value, setValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const handlerChange = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value });
+  };
+  /**
+   * Изменяет данные пользователя.
+   */
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    fetchWithRefresh(`${BASE_URL}/auth/user`, {
+      ...PATCH_HEADERS,
+      body: JSON.stringify(value),
+    })
+      .then((res) => {
+        dispatch({
+          type: CHANGE_USER_DATA,
+          payload: res.user,
+        });
+      })
+      .catch((res) => console.log(res));
+  };
+  /**
+   * Изменяет данные пользователя, на старые.
+   */
+  const handlerOldData = () => {
+    fetchWithRefresh(`${BASE_URL}/auth/user`, {
+      ...PATCH_HEADERS,
+      body: JSON.stringify(returnOldUserData),
+    })
+      .then((res) => {
+        dispatch({
+          type: CHANGE_USER_DATA,
+          payload: res.user,
+        });
+      })
+      .catch((res) => console.log(res));
+  };
   return (
     <form
       action="/"

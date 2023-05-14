@@ -5,13 +5,9 @@ import {
   GET_INGRIDIENTS_ERRORE,
   GET_INGRIDIENTS_REQUEST,
 } from "./BurgerIngredientsReducer/reducer";
-import {
-  USER_LOGIN_AUTHORIZATION,
-  LOGOUT_USER,
-  CHANGE_USER_DATA,
-} from "./authReducer/reducer";
+import { USER_LOGIN_AUTHORIZATION, LOGOUT_USER } from "./authReducer/reducer";
 import { setOrderData } from "../store/OrderDetailsReducer/actions";
-import { userAuthentificated, isUserChecked } from "./authReducer/actions";
+import { isUserChecked } from "./authReducer/actions";
 
 export const fetchOrderPost = (ingredientsList) => (dispatch) => {
   fetch(`${BASE_URL}/orders/`, {
@@ -76,11 +72,9 @@ export const authorizationUser = (loginUserData) => (dispatch) => {
         payload: res.user,
       });
       dispatch(isUserChecked(true));
-      dispatch(userAuthentificated(true));
     })
     .catch((err) => {
       dispatch(isUserChecked(false));
-      dispatch(userAuthentificated(false));
       console.log(err);
     });
 };
@@ -107,12 +101,10 @@ export const registerUser = (registerUserData) => (dispatch) => {
         payload: res.user,
       });
       dispatch(isUserChecked(true));
-      dispatch(userAuthentificated(true));
       console.log(res);
     })
     .catch((err) => {
       dispatch(isUserChecked(false));
-      dispatch(userAuthentificated(false));
       console.log(err);
     });
 };
@@ -136,104 +128,4 @@ export const logoutUser = () => (dispatch) => {
       });
     })
     .catch((err) => console.log(err));
-};
-/**
- * Получить данные о пользователе
- */
-export const getUserData = () => {
-  return fetch(`${BASE_URL}/auth/user`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  }).then(checkResponse);
-};
-export const fetchWithRefresh = () => (dispatch) => {
-  getUserData()
-    .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: USER_LOGIN_AUTHORIZATION,
-          payload: res.user,
-        });
-        dispatch(userAuthentificated(true));
-      } else {
-        dispatch(isUserChecked(false));
-        dispatch(userAuthentificated(false));
-      }
-    })
-    .catch((err) => {
-      if (err.message === "jwt expired") {
-        dispatch(refreshToken());
-      }
-      console.log(err.message);
-    });
-};
-
-/**
- * Обновить accessToken
- */
-export const refreshToken = () => (dispatch) => {
-  fetch(`${BASE_URL}/auth/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify({
-      token: localStorage.getItem("refreshToken"),
-    }),
-  })
-    .then(checkResponse)
-    .then((res) => {
-      localStorage.setItem(
-        "accessToken",
-        res.accessToken.replace("Bearer ", "") || ""
-      );
-      localStorage.setItem("refreshToken", res.refreshToken);
-      dispatch(userAuthentificated(true));
-    })
-    .catch((err) => {
-      dispatch(userAuthentificated(false));
-    });
-};
-
-export const requestRefreshToken = () => (dispatch) => {
-  fetch(`${BASE_URL}/auth/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify({
-      token: localStorage.getItem("refreshToken"),
-    }),
-  })
-    .then(checkResponse)
-};
-/**
- * Изменить данные пользователя
- */
-export const changeUserData = (newUserData) => (dispatch) => {
-  return fetch(`${BASE_URL}/auth/user`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-    body: JSON.stringify(newUserData),
-  })
-    .then(checkResponse)
-    .then((res) => {
-      dispatch(refreshToken());
-      dispatch({
-        type: CHANGE_USER_DATA,
-        payload: res.user,
-      });
-      console.log(res);
-    })
-    .catch((err) => {
-      dispatch(refreshToken());
-      dispatch(changeUserData());
-      console.log(err);
-    });
 };

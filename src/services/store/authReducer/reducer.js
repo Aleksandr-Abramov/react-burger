@@ -10,7 +10,7 @@ const initialState = {
   user: false,
   oldUserData: null,
   isAuthChecked: false,
-  isUserAuthentificated: false,
+  //isUserAuthentificated: false,
   resetPassword: false,
 };
 
