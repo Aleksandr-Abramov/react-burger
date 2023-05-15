@@ -12,18 +12,18 @@ export const GET_HEADERS = {
   method: "GET",
   headers: {
     "Content-Type": "application/json;charset=utf-8",
-    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    authorization: `${localStorage.getItem("accessToken")}`,
   },
-}
+};
 
-export const PATCH_HEADERS =  {
+export const PATCH_HEADERS = {
   method: "PATCH",
   headers: {
     "Content-Type": "application/json;charset=utf-8",
-    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    authorization: `${localStorage.getItem("accessToken")}`,
   },
   // body: JSON.stringify(value),
-}
+};
 /**
  * Восстановление пароля
  */
@@ -70,7 +70,7 @@ export const requestRefreshToken = () => {
 export const fetchWithRefresh = async (url, options) => {
   try {
     const res = await fetch(url, options);
-    return checkResponse(res);
+    return await checkResponse(res);
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshData = await requestRefreshToken();

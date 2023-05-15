@@ -23,6 +23,7 @@ import { ProfileForm } from "../profile-form/ProfileForm";
 import { isUserChecked } from "../../services/store/authReducer/actions";
 import ProtectedRouteElement from "../protected-route-element/ProtectedRouteElement";
 import { BASE_URL, fetchWithRefresh, GET_HEADERS } from "../../utils/api";
+import { USER_LOGIN_AUTHORIZATION } from "../../services/store/authReducer/reducer";
 
 function App() {
   const location = useLocation();
@@ -36,12 +37,14 @@ function App() {
   React.useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       dispatch(isUserChecked(true));
-      fetchWithRefresh(
-        `${BASE_URL}/auth/user`,
-        GET_HEADERS
-      )
-      // .then((res) => console.log(res))
-      .catch((res) => console.log(res));
+      fetchWithRefresh(`${BASE_URL}/auth/user`, GET_HEADERS)
+        .then((res) => {
+          dispatch({
+            type: USER_LOGIN_AUTHORIZATION,
+            payload: res.user,
+          });
+        })
+        .catch((res) => console.log(res));
     } else {
       dispatch(isUserChecked(false));
     }

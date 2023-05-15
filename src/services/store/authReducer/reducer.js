@@ -8,9 +8,7 @@ export const CHANGE_RESET_PASSWORD = "CHANGE_RESET_PASSWORD";
 const initialState = {
   success: false,
   user: false,
-  oldUserData: null,
   isAuthChecked: false,
-  //isUserAuthentificated: false,
   resetPassword: false,
 };
 
@@ -29,8 +27,6 @@ export const AuthReducer = (state = initialState, action) => {
       return { ...state, user: null, oldUserData: false, success: false };
     case IS_USER_CHECKED:
       return { ...state, isAuthChecked: action.payload };
-    case IS_USER_AUTHENTIFICATED:
-      return { ...state, isUserAuthentificated: action.payload };
     case CHANGE_RESET_PASSWORD:
       return { ...state, resetPassword: action.payload };
     default:

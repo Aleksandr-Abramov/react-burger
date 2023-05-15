@@ -7,20 +7,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  oldUserData,
-  userData,
-} from "../../services/store/authReducer/selectors";
+import { userData } from "../../services/store/authReducer/selectors";
 import { BASE_URL, fetchWithRefresh, PATCH_HEADERS } from "../../utils/api";
 import { CHANGE_USER_DATA } from "../../services/store/authReducer/reducer";
 
 export const ProfileForm = () => {
   const dispatch = useDispatch();
   const userDataAuth = useSelector(userData);
-  const returnOldUserData = useSelector(oldUserData);
   const [value, setValue] = useState({
-    name: "",
-    email: "",
+    name: userDataAuth.name,
+    email: userDataAuth.email,
     password: "",
   });
   const handlerChange = (e) => {
@@ -44,20 +40,14 @@ export const ProfileForm = () => {
       .catch((res) => console.log(res));
   };
   /**
-   * Изменяет данные пользователя, на старые.
+   * Изменяет данные пользователя, в полях ввода.
    */
   const handlerOldData = () => {
-    fetchWithRefresh(`${BASE_URL}/auth/user`, {
-      ...PATCH_HEADERS,
-      body: JSON.stringify(returnOldUserData),
-    })
-      .then((res) => {
-        dispatch({
-          type: CHANGE_USER_DATA,
-          payload: res.user,
-        });
-      })
-      .catch((res) => console.log(res));
+    setValue({
+      name: userDataAuth.name,
+      email: userDataAuth.email,
+      password: "",
+    });
   };
   return (
     <form
@@ -67,7 +57,7 @@ export const ProfileForm = () => {
       onSubmit={handlerSubmit}
     >
       <Input
-        placeholder={userDataAuth ? userDataAuth.name : "Имя"}
+        placeholder={"Имя"}
         icon={"EditIcon"}
         extraClass="mb-6"
         value={value.name}
@@ -77,7 +67,7 @@ export const ProfileForm = () => {
       />
 
       <EmailInput
-        placeholder={userDataAuth ? userDataAuth.email : "Логон"}
+        placeholder={"Логон"}
         icon={"EditIcon"}
         extraClass="mb-6"
         name="email"

@@ -62,9 +62,11 @@ export const authorizationUser = (loginUserData) => (dispatch) => {
   })
     .then(checkResponse)
     .then((res) => {
+      console.log(res);
       localStorage.setItem(
         "accessToken",
-        res.accessToken.replace("Bearer ", "")
+        // res.accessToken.replace("Bearer ", "")
+        res.accessToken
       );
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch({
@@ -93,7 +95,8 @@ export const registerUser = (registerUserData) => (dispatch) => {
     .then((res) => {
       localStorage.setItem(
         "accessToken",
-        res.accessToken.replace("Bearer ", "")
+        // res.accessToken.replace("Bearer ", "")
+        res.accessToken
       );
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch({
