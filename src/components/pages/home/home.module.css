@@ -1,0 +1,14 @@
+.wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.messageErrorText {
+  max-width: 520px;
+  margin: 160px auto 0 auto;
+  text-align: center;
+}

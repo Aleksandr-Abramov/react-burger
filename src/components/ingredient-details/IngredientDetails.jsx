@@ -1,9 +1,15 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import PropTypes from "prop-types";
 
-const IngredientDetails = () => {
-  const data = useSelector((state) => state.IngredientDetails.ingredient)
+const IngredientDetails = ({ ingredientsData }) => {
+  const params = useParams();
+  const data = ingredientsData.find((item) => item._id === params.ingredientId);
+
+  if (!data) {
+    return "Загрузка...";
+  }
 
   return (
     <div className={styles.container}>
@@ -48,6 +54,10 @@ const IngredientDetails = () => {
       </div>
     </div>
   );
+};
+
+IngredientDetails.propTypes = {
+  ingredientsData: PropTypes.array.isRequired,
 };
 
 export default IngredientDetails;

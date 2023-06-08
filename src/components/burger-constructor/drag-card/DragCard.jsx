@@ -8,13 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeIngredient,
   deleteIngredient,
-} from "../../../services/actions/BurgerConstructorReducer";
+} from "../../../services/store/BurgerConstructorReducer/actions";
+import { getBurgerConstructorList } from "../../../services/store/BurgerConstructorReducer/selectors";
 import PropTypes from "prop-types";
 
 const DragCard = ({ styles, item, id, index }) => {
-  const cards = useSelector(
-    (state) => state.BurgerConstructorReducer.ingredients
-  );
+  const cards = useSelector(getBurgerConstructorList);
   const dispatch = useDispatch();
 
   const moveCard = (dragIndex, hoverIndex) => {

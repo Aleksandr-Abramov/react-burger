@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  width: 480px;
+  flex-direction: column;
+  align-items: center;
+}
+.button {
+  margin-bottom: 80px;
+}
+
+.button2 {
+  text-decoration: none;
+  color: #4c4cff;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.linkFormContainer {
+  align-self: flex-end;
+}
+.leftContentContainer {
+  width: 320px;
+}
