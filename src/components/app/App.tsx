@@ -48,11 +48,11 @@ function App() {
     } else {
       dispatch(isUserChecked(false));
     }
-    dispatch(fetchIngredients());
+    dispatch(fetchIngredients() as unknown as any);
   }, [dispatch]);
 
   const background = location.state && location.state.background;
-  const handlerModelClose = (e) => {
+  const handlerModelClose = (e: React.BaseSyntheticEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement> | any ) => {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
@@ -96,7 +96,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRouteElement
-                onlyAuthorizedUsers={false}
+
                 element={<Profile />}
               />
             }

@@ -1,8 +1,14 @@
 import React from "react";
 import styles from "../burger-constructor-placeholder/BurgerConstructorPlaceholder.module.css";
-import PropTypes from "prop-types";
 
-const BurgerConstructorPlaceholder = ({ title, borderColor, type }) => {
+
+type TBurgerConstructorPlaceholderProps = {
+  title: string;
+  borderColor: string;
+  type: string; 
+}
+
+const BurgerConstructorPlaceholder: React.FC<TBurgerConstructorPlaceholderProps> = ({ title, borderColor, type }) => {
   let styleType = undefined;
   if (type === "top") {
     styleType = styles.fakeConntainerTop;
@@ -21,9 +27,5 @@ const BurgerConstructorPlaceholder = ({ title, borderColor, type }) => {
   );
 };
 
-BurgerConstructorPlaceholder.propTypes = {
-  title: PropTypes.string.isRequired,
-  borderColor: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-};
+
 export default BurgerConstructorPlaceholder;

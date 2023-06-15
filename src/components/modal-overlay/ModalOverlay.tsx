@@ -1,10 +1,18 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import styles from "./modal-overlay.module.css";
-import PropTypes from "prop-types";
+
 const modalRoot = document.getElementById("modal-portal");
 
-const ModalOverlay = ({ children, handlerModelClose }) => {
+type TModalOverlay = {
+  children: React.ReactNode;
+  handlerModelClose: (e: any) => void;
+};
+
+const ModalOverlay: React.FC<TModalOverlay> = ({
+  children,
+  handlerModelClose,
+}) => {
   return createPortal(
     <div
       data-overlay="overlay"
@@ -13,12 +21,8 @@ const ModalOverlay = ({ children, handlerModelClose }) => {
     >
       {children}
     </div>,
-    modalRoot
+    modalRoot!
   );
 };
 
-ModalOverlay.propTypes = {
-  children: PropTypes.element,
-  handlerModelClose: PropTypes.func.isRequired,
-};
 export default ModalOverlay;

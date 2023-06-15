@@ -13,7 +13,7 @@ export const RESET_PASSWORD = "/reset-password"
 export const PROFILE = "/profile"
 export const PROFILE_ORDERS = "/profile/orders"
 
-const ProtectedRouteElement = ({ element }) => {
+const ProtectedRouteElement = ({ element }: {element: React.ReactElement}) => {
   const user = useSelector(userData);
   const isResetPass = useSelector(isResetPassword);
   const location = useLocation();

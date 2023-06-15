@@ -1,12 +1,17 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 
-const Modal = ({ children, handlerModelClose }) => {
+type TModalProps = {
+  children: ReactNode;
+  handlerModelClose: (e: any) => void;
+};
+
+const Modal: React.FC<TModalProps> = ({ children, handlerModelClose }) => {
   React.useEffect(() => {
-    const closePopup = (e) => {
+    const closePopup = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         handlerModelClose(e);
       }

@@ -18,12 +18,12 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const handlerChange = (e) => {
+  const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(authorizationUser(value));
+    dispatch(authorizationUser(value) as unknown as any);
   };
   return (
     <>

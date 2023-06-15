@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./burger-ingredient.module.css";
-import PropTypes from "prop-types";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
@@ -11,14 +10,20 @@ import {
 import { useDispatch } from "react-redux";
 import { setIngredient } from "../../services/store/IngredientDetailsReducer/actions";
 import { draggingOff, draggingOn} from "../../services/store/BurgerConstructorReducer/actions";
+import { IIngridients } from "../../utils/typeScript";
 
-const BurgerIngredient = ({ item, count }) => {
+type BurgerIngredientProps = {
+  item: IIngridients;
+  count: number;
+}
+
+const BurgerIngredient: React.FC<BurgerIngredientProps>= ({ item, count }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
   const ingredientId = item["_id"];
 
-  const handlerModelOpen = (item) => {
+  const handlerModelOpen = (item: IIngridients) => {
     dispatch(setIngredient(item));
   };
 
@@ -61,9 +66,5 @@ const BurgerIngredient = ({ item, count }) => {
   );
 };
 
-BurgerIngredient.propTypes = {
-  item: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired,
-};
 
 export default BurgerIngredient;

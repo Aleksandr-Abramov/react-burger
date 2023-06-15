@@ -6,7 +6,7 @@ import {
   GET_INGRIDIENTS_REQUEST,
 } from "./BurgerIngredientsReducer/reducer";
 import { USER_LOGIN_AUTHORIZATION, LOGOUT_USER } from "./authReducer/reducer";
-import { setOrderData } from "../store/OrderDetailsReducer/actions";
+import { setOrderData } from "./OrderDetailsReducer/actions";
 import { isUserChecked } from "./authReducer/actions";
 
 export const fetchOrderPost = (ingredientsList) => (dispatch) => {
