@@ -1,7 +1,25 @@
+
 export const BASE_URL = "https://norma.nomoreparties.space/api";
 
-export const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+type TPATCH_HEADERS = {
+  method: string;
+  headers: {
+      "Content-Type": string;
+      authorization: string;
+  };
+  body: string
+}
+
+type TGET_HEADERS = {
+  method: string;
+  headers: {
+      "Content-Type": string;
+      authorization: string;
+  };
+}
+
+export const checkResponse = (res: Response)=> {
+  return res.ok ? res.json() : res.json().then((err: Error) => Promise.reject(err));
 };
 
 export const getIngredientsData = () => {
@@ -27,7 +45,7 @@ export const PATCH_HEADERS = {
 /**
  * Восстановление пароля
  */
-export const forgotPassword = (emailData) => {
+export const forgotPassword = (emailData:{email: string;}) => {
   console.log(JSON.stringify(emailData));
   return fetch(`${BASE_URL}/password-reset`, {
     method: "POST",
@@ -40,7 +58,7 @@ export const forgotPassword = (emailData) => {
 /**
  * Сброс пароля
  */
-export const resetPassword = (resetPsswordData) => {
+export const resetPassword = (resetPsswordData: {password: string,token: string}) => {
   return fetch(`${BASE_URL}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -67,24 +85,26 @@ export const requestRefreshToken = () => {
 /**
  * Получить/изменить данные о пользователе.
  */
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: TPATCH_HEADERS | TGET_HEADERS) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if (err.message === "jwt expired") {
-      const refreshData = await requestRefreshToken();
-
-      if (!refreshData.success) {
-        return Promise.reject(refreshData);
+    if(err instanceof Error) {
+      if (err.message === "jwt expired") {
+        const refreshData = await requestRefreshToken();
+  
+        if (!refreshData.success) {
+          return Promise.reject(refreshData);
+        }
+        localStorage.setItem("refreshToken", refreshData.refreshToken);
+        localStorage.setItem("accessToken", refreshData.accessToken);
+        options.headers.authorization = refreshData.accessToken;
+        const res = await fetch(url, options);
+        return await checkResponse(res);
+      } else {
+        return Promise.reject(err);
       }
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      localStorage.setItem("accessToken", refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options);
-      return await checkResponse(res);
-    } else {
-      return Promise.reject(err);
     }
   }
 };

@@ -50,7 +50,7 @@ const DragCard: React.FC<IDragCard> = ({ styles, item , id, index }) => {
     dispatch(changeIngredient(newCards));
   };
 
-  const ref = React.useRef<any>(null);
+  const ref = React.useRef<HTMLLIElement>(null);
   const [, refDrop] = useDrop({
     accept: "card",
     hover: (item: TuseDropProps, monitor) => {
