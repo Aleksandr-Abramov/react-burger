@@ -90,21 +90,19 @@ export const fetchWithRefresh = async (url: string, options: TPATCH_HEADERS | TG
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if(err instanceof Error) {
-      if (err.message === "jwt expired") {
-        const refreshData = await requestRefreshToken();
-  
-        if (!refreshData.success) {
-          return Promise.reject(refreshData);
-        }
-        localStorage.setItem("refreshToken", refreshData.refreshToken);
-        localStorage.setItem("accessToken", refreshData.accessToken);
-        options.headers.authorization = refreshData.accessToken;
-        const res = await fetch(url, options);
-        return await checkResponse(res);
-      } else {
-        return Promise.reject(err);
+    if ((err instanceof Error) && err.message === "jwt expired") {
+      const refreshData = await requestRefreshToken();
+
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
       }
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      localStorage.setItem("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options);
+      return await checkResponse(res);
+    } else {
+      return Promise.reject(err);
     }
   }
 };

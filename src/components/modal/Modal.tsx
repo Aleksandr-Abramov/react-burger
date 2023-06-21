@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 
 type TModalProps = {
@@ -11,7 +10,7 @@ type TModalProps = {
 
 const Modal: React.FC<TModalProps> = ({ children, handlerModelClose }) => {
   React.useEffect(() => {
-    const closePopup = (e: KeyboardEvent) => {
+    const closePopup = (e:KeyboardEvent) => {
       if (e.key === "Escape") {
         handlerModelClose(e);
       }
@@ -37,11 +36,6 @@ const Modal: React.FC<TModalProps> = ({ children, handlerModelClose }) => {
       </div>
     </ModalOverlay>
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  handlerModelClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

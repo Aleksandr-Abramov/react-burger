@@ -59,12 +59,12 @@ const BurgerConstructor = () => {
     dispatch(openOrderPopup());
   };
 
-  function handlerModelClose(e: React.BaseSyntheticEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement> | any ) {
+  function handlerModelClose(e: React.BaseSyntheticEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement> ) {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
       e.currentTarget.type === "button" ||
-      e.key === "Escape"
+      (e instanceof KeyboardEvent && e.key === "Escape")
     ) {
       dispatch(closeIngredientPopup());
       dispatch(closeOrderPopup());
