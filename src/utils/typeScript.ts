@@ -28,3 +28,5 @@ export interface IIngridients {
       price: number;
       key?:string;
 }
+export type THandlerModelClose = React.BaseSyntheticEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement>| KeyboardEvent|React.MouseEvent<HTMLDivElement>| MouseEvent;
+

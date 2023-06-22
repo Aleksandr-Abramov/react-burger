@@ -18,15 +18,15 @@ const BurgerIngredients = () => {
   const BurgerConstructorList = useSelector(getBurgerConstructorList);
   const BurgerConstructorBun = useSelector(getBurgerConsructorBun);
 
-  const [bunsRef, inViewBuns, bunElement]:any = useInView({
+  const [bunsRef, inViewBuns, bunElement] = useInView({
     threshold: 0,
   });
 
-  const [saucesRef, inViewSauces, sauceElement]:any = useInView({
+  const [saucesRef, inViewSauces, sauceElement] = useInView({
     threshold: 0,
   });
 
-  const [mainsRef, inViewMains, mainElement]:any = useInView({
+  const [mainsRef, inViewMains, mainElement] = useInView({
     threshold: 0,
   });
 
@@ -48,17 +48,17 @@ const BurgerIngredients = () => {
 
   const onTabClick = (tab: string) => {
     if (tab === "bun") {
-      bunElement.target.scrollIntoView({
+      bunElement?.target.scrollIntoView({
         block: "start",
         behavior: "smooth",
       });
     } else if (tab === "sauce") {
-      sauceElement.target.scrollIntoView({
+      sauceElement?.target.scrollIntoView({
         block: "start",
         behavior: "smooth",
       });
     } else if (tab === "main") {
-      mainElement.target.scrollIntoView({
+      mainElement?.target.scrollIntoView({
         block: "start",
         behavior: "smooth",
       });

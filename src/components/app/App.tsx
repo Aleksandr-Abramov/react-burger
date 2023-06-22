@@ -24,6 +24,7 @@ import { isUserChecked } from "../../services/store/authReducer/actions";
 import ProtectedRouteElement from "../protected-route-element/ProtectedRouteElement";
 import { BASE_URL, fetchWithRefresh, GET_HEADERS } from "../../utils/api";
 import { USER_LOGIN_AUTHORIZATION } from "../../services/store/authReducer/reducer";
+import { THandlerModelClose } from "../../utils/typeScript";
 
 function App() {
   const location = useLocation();
@@ -52,7 +53,8 @@ function App() {
   }, [dispatch]);
 
   const background = location.state && location.state.background;
-  const handlerModelClose = (e: React.BaseSyntheticEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement>) => {
+
+  const handlerModelClose = (e:THandlerModelClose) => {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
