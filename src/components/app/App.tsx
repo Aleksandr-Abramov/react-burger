@@ -13,7 +13,6 @@ import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchIngredients } from "../../services/store/asyncActions";
-import { clearIngredient } from "../../services/store/IngredientDetailsReducer/actions";
 import {
   getIngridients,
   getIsLoading,
@@ -58,11 +57,9 @@ function App() {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
-      e.currentTarget.type === "button" ||
-      (e instanceof KeyboardEvent && e.key === "Escape")
+      e.currentTarget.type === "button"
     ) {
       navigate("/");
-      dispatch(clearIngredient());
     }
   };
   if (isLoading) {

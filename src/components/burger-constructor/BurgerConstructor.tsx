@@ -6,9 +6,7 @@ import OrderDetails from "../order-details/OrderDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { openOrderPopup } from "../../services/store/popupOrderRecucer/actions";
 import { useDrop } from "react-dnd";
-import { closeIngredientPopup } from "../../services/store/popupIngredientsReducer/actions";
 import { closeOrderPopup } from "../../services/store/popupOrderRecucer/actions";
-import { clearIngredient } from "../../services/store/IngredientDetailsReducer/actions";
 import { fetchOrderPost } from "../../services/store/asyncActions";
 import {
   addIngredientConstuctor,
@@ -28,6 +26,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { userData } from "../../services/store/authReducer/selectors";
 import { IIngridients } from "../../utils/typeScript";
+import { THandlerModelClose } from "../../utils/typeScript";
 
 const BurgerConstructor = () => {
   const isOpenCloseOrderPopup = useSelector(getIsOpenCloseOrderPopup);
@@ -59,16 +58,13 @@ const BurgerConstructor = () => {
     dispatch(openOrderPopup());
   };
 
-  function handlerModelClose(e: React.BaseSyntheticEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement> ) {
+  function handlerModelClose(e: THandlerModelClose) {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
-      e.currentTarget.type === "button" ||
-      (e instanceof KeyboardEvent && e.key === "Escape")
+      e.currentTarget.type === "button"
     ) {
-      dispatch(closeIngredientPopup());
       dispatch(closeOrderPopup());
-      dispatch(clearIngredient());
     }
   }
 
