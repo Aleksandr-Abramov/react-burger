@@ -17,12 +17,12 @@ const Register = () => {
     password: "",
     name: "",
   });
-  const handlerChange = (e) => {
+  const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(registerUser(value));
+    dispatch(registerUser(value) as unknown as any);
   };
   return (
     <form

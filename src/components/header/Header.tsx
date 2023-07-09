@@ -30,7 +30,7 @@ const Header = () => {
                 {({ isActive }) => {
                   return (
                     <>
-                      <BurgerIcon type={isActive ? "primery" : "secondary"} />
+                      <BurgerIcon type={isActive ? "primary" : "secondary"} />
                       <span className={`pl-2`}>Конструктор</span>
                     </>
                   );
@@ -47,7 +47,7 @@ const Header = () => {
                 {({ isActive }) => {
                   return (
                     <>
-                      <BurgerIcon type={isActive ? "primery" : "secondary"} />
+                      <BurgerIcon type={isActive ? "primary" : "secondary"} />
                       <span className={`pl-2`}>Лента заказов</span>
                     </>
                   );
@@ -69,7 +69,7 @@ const Header = () => {
                 {({ isActive }) => {
                   return (
                     <>
-                      <ProfileIcon type={isActive ? "primery" : "secondary"} />
+                      <ProfileIcon type={isActive ? "primary" : "secondary"} />
                       <span className={`pl-2`}>{isUserAuth ? isUserAuth.name : "Личный кабинет"}</span>
                     </>
                   );

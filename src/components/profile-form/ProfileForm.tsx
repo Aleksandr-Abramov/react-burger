@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import styles from "./profile-form.module.css";
 import {
   EmailInput,
@@ -19,13 +19,13 @@ export const ProfileForm = () => {
     email: userDataAuth.email,
     password: "",
   });
-  const handlerChange = (e) => {
+  const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
   /**
    * Изменяет данные пользователя.
    */
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: FormEvent) => {
     e.preventDefault();
     fetchWithRefresh(`${BASE_URL}/auth/user`, {
       ...PATCH_HEADERS,
@@ -68,7 +68,8 @@ export const ProfileForm = () => {
 
       <EmailInput
         placeholder={"Логон"}
-        icon={"EditIcon"}
+        //icon={"EditIcon"}
+        //isIcon={false}
         extraClass="mb-6"
         name="email"
         value={value.email}

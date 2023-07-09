@@ -13,7 +13,6 @@ import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchIngredients } from "../../services/store/asyncActions";
-import { clearIngredient } from "../../services/store/IngredientDetailsReducer/actions";
 import {
   getIngridients,
   getIsLoading,
@@ -24,6 +23,7 @@ import { isUserChecked } from "../../services/store/authReducer/actions";
 import ProtectedRouteElement from "../protected-route-element/ProtectedRouteElement";
 import { BASE_URL, fetchWithRefresh, GET_HEADERS } from "../../utils/api";
 import { USER_LOGIN_AUTHORIZATION } from "../../services/store/authReducer/reducer";
+import { THandlerModelClose } from "../../utils/typeScript";
 
 function App() {
   const location = useLocation();
@@ -48,19 +48,18 @@ function App() {
     } else {
       dispatch(isUserChecked(false));
     }
-    dispatch(fetchIngredients());
+    dispatch(fetchIngredients() as unknown as any);
   }, [dispatch]);
 
   const background = location.state && location.state.background;
-  const handlerModelClose = (e) => {
+
+  const handlerModelClose = (e:THandlerModelClose) => {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
-      e.currentTarget.type === "button" ||
-      e.key === "Escape"
+      e.currentTarget.type === "button"
     ) {
       navigate("/");
-      dispatch(clearIngredient());
     }
   };
   if (isLoading) {
@@ -96,7 +95,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRouteElement
-                onlyAuthorizedUsers={false}
+
                 element={<Profile />}
               />
             }

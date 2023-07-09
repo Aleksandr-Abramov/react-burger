@@ -11,7 +11,7 @@ const Profile = () => {
   const activeClass = `text text_type_main-medium text_color_inactive ${styles.link} ${styles.activeLink}`;
   const unActiveClass = `text text_type_main-medium text_color_inactive ${styles.link}`;
   const logout = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser() as unknown as any);
     navigate("/login")
   }
 
