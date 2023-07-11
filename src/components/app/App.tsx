@@ -24,6 +24,7 @@ import ProtectedRouteElement from "../protected-route-element/ProtectedRouteElem
 import { BASE_URL, fetchWithRefresh, GET_HEADERS } from "../../utils/api";
 import { USER_LOGIN_AUTHORIZATION } from "../../services/store/authReducer/reducer";
 import { THandlerModelClose } from "../../utils/typeScript";
+import { Feed } from "../pages/feed/Feed";
 
 function App() {
   const location = useLocation();
@@ -33,6 +34,17 @@ function App() {
   const ingredientsData = useSelector(getIngridients);
 
   const dispatch = useDispatch();
+
+//   React.useEffect(() => {
+
+// const  ws = new WebSocket(`wss://norma.nomoreparties.space/orders/all`);
+// ws.onopen = (event) => {
+//     console.log("Соединение установлено")
+// } 
+// ws.onmessage = (event: MessageEvent) => {
+//   console.log(JSON.parse(event.data))
+// } 
+//   },[])
 
   React.useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -54,12 +66,19 @@ function App() {
   const background = location.state && location.state.background;
 
   const handlerModelClose = (e:THandlerModelClose) => {
+    
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
       e.currentTarget.type === "button"
     ) {
-      navigate("/");
+      if(background.pathname === "/feed") {
+        navigate("feed");
+      }
+      if(background.pathname === "/") {
+        navigate("/");
+      }
+      
     }
   };
   if (isLoading) {
@@ -95,7 +114,6 @@ function App() {
             path="/profile"
             element={
               <ProtectedRouteElement
-
                 element={<Profile />}
               />
             }
@@ -104,8 +122,14 @@ function App() {
             <Route path="orders" element={<Orders />} />
           </Route>
           <Route
-            path="order"
-            element={<ProtectedRouteElement element={<Orders />} />}
+            path="feed"
+            element={<ProtectedRouteElement element={<Feed />} />}
+          />
+          <Route
+            path="feed/3"
+            element={<ProtectedRouteElement element={<Modal handlerModelClose={handlerModelClose}>
+            
+          </Modal>} />}
           />
           <Route
             path="/ingredients/:ingredientId"
@@ -121,6 +145,14 @@ function App() {
             element={
               <Modal handlerModelClose={handlerModelClose}>
                 <IngredientDetails ingredientsData={ingredientsData} />
+              </Modal>
+            }
+          />
+           <Route
+            path="/feed/3"
+            element={
+              <Modal handlerModelClose={handlerModelClose}>
+          
               </Modal>
             }
           />

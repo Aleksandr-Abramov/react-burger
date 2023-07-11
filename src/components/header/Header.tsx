@@ -39,7 +39,7 @@ const Header = () => {
             </li>
             <li className={`${styles.menuItem}`}>
               <NavLink
-                to="/order"
+                to="/feed"
                 className={({ isActive }) =>
                   isActive ? activeClass : unActiveClass
                 }

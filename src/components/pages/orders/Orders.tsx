@@ -1,13 +1,22 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Order } from "../../order/Order";
+import styles from "./orders.module.css";
 
 const Orders = () => {
     return (
-        <div>
-            <h1>заглушка Истории заказов</h1>
-
-            <NavLink to="/profile">Profile</NavLink>
-        </div>
+        <section className={`custom-scroll ${styles.rightContainer}`}>
+          <Order />
+          <Order />
+          <Order />
+          <Order />
+          <Order />
+        </section>
+        // <div className={styles.rightContainer}>
+        //     <Order></Order>
+        //     <Order></Order>
+        //     <Order></Order>
+        //     <Order></Order>
+        // </div>
     )
 }
 

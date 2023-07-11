@@ -1,3 +1,7 @@
+.wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+}
 .link {
   text-decoration: none;
 }
@@ -14,13 +18,13 @@
 }
 
 .leftContentContainer {
+  margin-top: 120px;
   width: 320px;
 }
 .profileContainer {
   display: flex;
   justify-content: space-between;
-  max-width: 860px;
-  margin: 180px auto 0 auto;
+  margin: 40px auto 0 auto;
 }
 .text {
   color: #8585ad;

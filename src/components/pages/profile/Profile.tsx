@@ -16,7 +16,8 @@ const Profile = () => {
   }
 
   return (
-    <main className={styles.profileContainer}>
+    <div className={styles.wrapper}>
+      <main className={styles.profileContainer}>
       <div className={styles.leftContentContainer}>
         <nav className={styles.linkContainer}>
           <NavLink
@@ -54,6 +55,8 @@ const Profile = () => {
       </div>
       <Outlet />
     </main>
+    </div>
+    
   );
 };
 

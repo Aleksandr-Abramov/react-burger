@@ -1,0 +1,30 @@
+.orderContainer {
+  border-radius: 40px;
+  background: #1c1c21;
+  padding: 24px 24px;
+  margin-bottom: 16px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.orderContainer:last-child {
+    margin-bottom: 0;
+}
+
+.digitsSpan {
+  width: 76px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dateH3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.imageContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
