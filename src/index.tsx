@@ -6,10 +6,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { rootReducer } from "./services/store/reducers";
 import { BrowserRouter } from "react-router-dom";
+import { wsOrdersAllMiddleware } from "./middleware/wsOrdersAllMiddleware";
 
-
-
-const store = configureStore({reducer: rootReducer})
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      wsOrdersAllMiddleware("wss://norma.nomoreparties.space/orders/all")
+    ),
+});
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
 root.render(
