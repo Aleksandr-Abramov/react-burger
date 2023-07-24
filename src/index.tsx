@@ -12,7 +12,7 @@ const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      wsOrdersAllMiddleware("wss://norma.nomoreparties.space/orders/all")
+      wsOrdersAllMiddleware()
     ),
 });
 const root = ReactDOM.createRoot(document.getElementById("root")!);

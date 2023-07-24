@@ -25,6 +25,11 @@ import { BASE_URL, fetchWithRefresh, GET_HEADERS } from "../../utils/api";
 import { USER_LOGIN_AUTHORIZATION } from "../../services/store/authReducer/reducer";
 import { THandlerModelClose } from "../../utils/typeScript";
 import { Feed } from "../pages/feed/Feed";
+import { OrderDetailsPopup } from "../order-details-popup/OrderDetailsPopup";
+import { clearFeedOrder } from "../../services/store/popupFeedOrderReducer/actions";
+import { getFeedOrderData } from "../../services/store/popupFeedOrderReducer/selectors";
+
+
 
 function App() {
   const location = useLocation();
@@ -32,19 +37,15 @@ function App() {
   const error = useSelector(getIngredientsError);
   const isLoading = useSelector(getIsLoading);
   const ingredientsData = useSelector(getIngridients);
+  // const feedOrderData = useSelector(getFeedOrderData);
+  // console.log(feedOrderData);
+  
+  // console.log(feedOrderData);
+  
+
+  
 
   const dispatch = useDispatch();
-
-//   React.useEffect(() => {
-
-// const  ws = new WebSocket(`wss://norma.nomoreparties.space/orders/all`);
-// ws.onopen = (event) => {
-//     console.log("Соединение установлено")
-// } 
-// ws.onmessage = (event: MessageEvent) => {
-//   console.log(JSON.parse(event.data))
-// } 
-//   },[])
 
   React.useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -64,21 +65,21 @@ function App() {
   }, [dispatch]);
 
   const background = location.state && location.state.background;
+  const feedOrderData = location.state && location.state.order;
 
-  const handlerModelClose = (e:THandlerModelClose) => {
-    
+  const handlerModelClose = (e: THandlerModelClose) => {
     e.stopPropagation();
     if (
       e.target.dataset.overlay === "overlay" ||
       e.currentTarget.type === "button"
     ) {
-      if(background.pathname === "/feed") {
+      if (background.pathname === "/feed") {
         navigate("feed");
+        // dispatch(clearFeedOrder());
       }
-      if(background.pathname === "/") {
+      if (background.pathname === "/") {
         navigate("/");
       }
-      
     }
   };
   if (isLoading) {
@@ -112,11 +113,7 @@ function App() {
           />
           <Route
             path="/profile"
-            element={
-              <ProtectedRouteElement
-                element={<Profile />}
-              />
-            }
+            element={<ProtectedRouteElement element={<Profile />} />}
           >
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<Orders />} />
@@ -126,10 +123,13 @@ function App() {
             element={<ProtectedRouteElement element={<Feed />} />}
           />
           <Route
-            path="feed/3"
-            element={<ProtectedRouteElement element={<Modal handlerModelClose={handlerModelClose}>
-            
-          </Modal>} />}
+            path="feed/:id"
+            element={
+        
+    
+            <OrderDetailsPopup feedOrderData={feedOrderData}/>
+      
+            }
           />
           <Route
             path="/ingredients/:ingredientId"
@@ -148,13 +148,11 @@ function App() {
               </Modal>
             }
           />
-           <Route
-            path="/feed/3"
-            element={
-              <Modal handlerModelClose={handlerModelClose}>
-          
-              </Modal>
-            }
+          <Route
+            path="/feed/:id"
+            element={<Modal handlerModelClose={handlerModelClose}>
+              <OrderDetailsPopup feedOrderData={feedOrderData}/>
+            </Modal>}
           />
         </Routes>
       )}

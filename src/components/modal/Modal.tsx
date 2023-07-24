@@ -8,8 +8,9 @@ import { useDispatch } from "react-redux";
 import { closeOrderPopup } from "../../services/store/popupOrderRecucer/actions";
 
 type TModalProps = {
-  children: ReactNode;
+  children?: ReactNode;
   handlerModelClose: (e: THandlerModelClose) => void;
+  render?: () => void;
 };
 
 const Modal: React.FC<TModalProps> = ({ children, handlerModelClose }) => {

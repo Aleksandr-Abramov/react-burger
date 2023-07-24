@@ -1,23 +1,22 @@
 import React from "react";
 import { Order } from "../../order/Order";
 import styles from "./orders.module.css";
+import { useSelector } from "react-redux";
+import { getWsAllIngridients } from "../../../services/store/wsOrdersAll/selectors";
 
 const Orders = () => {
-    return (
-        <section className={`custom-scroll ${styles.rightContainer}`}>
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-        </section>
-        // <div className={styles.rightContainer}>
-        //     <Order></Order>
-        //     <Order></Order>
-        //     <Order></Order>
-        //     <Order></Order>
-        // </div>
-    )
-}
+  const getIngredients = useSelector(getWsAllIngridients);
+
+
+  return (
+    <section className={`custom-scroll ${styles.rightContainer}`}>
+      {/* {getIngredients.map(() => {
+        return <Order />;
+      })} */}
+      
+    </section>
+
+  );
+};
 
 export default Orders;

@@ -1,0 +1,52 @@
+.titleColor {
+    color: #00CCCC;
+}
+.ingredients {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 250px;
+}
+.ingredient {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    margin-right: 10px;
+}
+.ingredient:last-child {
+  
+    margin-bottom: 0px;
+}
+.ingredientContainer {
+    display: flex;
+    align-items: center;
+}
+.orderContainer {
+    padding-top: 50px;
+    padding-bottom: 40px;
+    width: 640px;
+    margin: 0 auto;
+}
+.img {
+    margin-right: 16px;
+    width: 64px;
+    height: 64px;
+    border: 2px solid #801AB2;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #1C1C21;
+  }
+  .priceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .price {
+    display: flex;
+    align-items: center;
+  }
